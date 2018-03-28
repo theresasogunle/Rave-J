@@ -12,14 +12,14 @@ import org.json.JSONObject;
  *
  * @author Theresa
  */
-<span class="nc" id="L15">public class Bank {</span>
+<span class="fc" id="L15">public class Bank {</span>
     private ApiConnection apiConnection;
-<span class="nc" id="L17">    Endpoints ed= new Endpoints();</span>
+<span class="fc" id="L17">    Endpoints ed= new Endpoints();</span>
     
     public JsonNode getAllBanks(){
-<span class="nc" id="L20">        this.apiConnection = new ApiConnection(ed.getBankEndPoint());</span>
+<span class="fc" id="L20">        this.apiConnection = new ApiConnection(ed.getBankEndPoint());</span>
         
-<span class="nc" id="L22">        return this.apiConnection.connectAndQueryWithGet();</span>
+<span class="fc" id="L22">        return this.apiConnection.connectAndQueryWithGet();</span>
     }
     
 }

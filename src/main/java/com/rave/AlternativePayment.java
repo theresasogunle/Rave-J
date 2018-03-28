@@ -23,13 +23,15 @@ public class AlternativePayment {
    Encryption e=new Encryption();
    Keys key=new Keys();
    
-   private String accountnumber,accountbank,currency,country,amount,firstname,lastname,
-           pin,email,IP,txRef,phonenumber,orderRef,network,flwRef;
+   private String accountnumber,accountbank,currency,country,
+           amount,firstname,lastname,
+           pin,email,IP,txRef,phonenumber,orderRef,network,
+           flwRef;
 
 
     /**
     *
-    * @param client
+    * @throws JSONException
     * @return JSONObject
     */
     
@@ -62,6 +64,13 @@ public class AlternativePayment {
         return ch.charge(client);
 
     }
+      /**
+    *
+    * @throws JSONException
+    * @return JSONObject
+    */
+    
+     
      public JSONObject chargeGhanaMobileMoney () throws JSONException{
         //getting charge endpoint
          JSONObject json=new JSONObject();
@@ -90,6 +99,12 @@ public class AlternativePayment {
         return ch.charge(client);
 
     }
+      /**
+    *
+    * @throws JSONException
+    * @return JSONObject
+    */
+    
       public JSONObject chargeKenyaMpesa () throws JSONException{
         //getting charge endpoint
           JSONObject json=new JSONObject();
@@ -124,8 +139,6 @@ public class AlternativePayment {
     * @return JSONObject
     */ 
     //to requery transaction for ghana mobile money,kenya mpesa and nigerian ussd using xquery
-
- 
 
     /**
      * @return the accountnumber

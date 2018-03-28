@@ -12,69 +12,69 @@ import org.json.JSONObject;
  *
  * @author Theresa
  */
-<span class="nc" id="L15">public class Transaction {</span>
+<span class="fc" id="L15">public class Transaction {</span>
     ApiConnection apiConnection;
-<span class="nc" id="L17">    private Keys key=new Keys();</span>
-<span class="nc" id="L18">    Endpoints end= new Endpoints();</span>
+<span class="fc" id="L17">    private Keys key=new Keys();</span>
+<span class="fc" id="L18">    Endpoints end= new Endpoints();</span>
    private String  flwref, txRef;
     
     //requery all failed transactions
 
     public JSONObject verifyTransactionRequery(){   
 
-<span class="nc" id="L25">      this.apiConnection = new ApiConnection(end.getVerifyEndPoint());</span>
-<span class="nc" id="L26">      ApiQuery api= new ApiQuery();</span>
-<span class="nc" id="L27">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
-<span class="nc" id="L28">      api.putParams(&quot;flw_ref&quot;, this.getFlwref());</span>
-<span class="nc" id="L29">      api.putParams(&quot;SECKEY&quot;,key.getSecretKey() );</span>
+<span class="fc" id="L25">      this.apiConnection = new ApiConnection(end.getVerifyEndPoint());</span>
+<span class="fc" id="L26">      ApiQuery api= new ApiQuery();</span>
+<span class="fc" id="L27">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
+<span class="fc" id="L28">      api.putParams(&quot;flw_ref&quot;, this.getFlwref());</span>
+<span class="fc" id="L29">      api.putParams(&quot;SECKEY&quot;,key.getSecretKey() );</span>
     
-<span class="nc" id="L31">      return this.apiConnection.connectAndQuery(api);</span>
+<span class="fc" id="L31">      return this.apiConnection.connectAndQuery(api);</span>
     }
     
 
     public JSONObject verifyTransactionXrequery(){   
      
-<span class="nc" id="L37">      this.apiConnection = new ApiConnection(end.getVerifyXrequeryEndPoint());</span>
+<span class="fc" id="L37">      this.apiConnection = new ApiConnection(end.getVerifyXrequeryEndPoint());</span>
 
-<span class="nc" id="L39">      ApiQuery api= new ApiQuery();</span>
+<span class="fc" id="L39">      ApiQuery api= new ApiQuery();</span>
       
-<span class="nc" id="L41">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
-<span class="nc" id="L42">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
-<span class="nc" id="L43">      api.putParams(&quot;SECKEY&quot;, key.getSecretKey());</span>
-<span class="nc" id="L44">      api.putParams(&quot;last_attempt&quot;, 1);</span>
-<span class="nc" id="L45">      api.putParams(&quot;only_successful&quot;, 1);</span>
+<span class="fc" id="L41">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
+<span class="fc" id="L42">      api.putParams(&quot;txref&quot;, this.getTxRef());</span>
+<span class="fc" id="L43">      api.putParams(&quot;SECKEY&quot;, key.getSecretKey());</span>
+<span class="fc" id="L44">      api.putParams(&quot;last_attempt&quot;, 1);</span>
+<span class="fc" id="L45">      api.putParams(&quot;only_successful&quot;, 1);</span>
 
-<span class="nc" id="L47">      return this.apiConnection.connectAndQuery(api);</span>
+<span class="fc" id="L47">      return this.apiConnection.connectAndQuery(api);</span>
     }
 
     /**
      * @return the flwref
      */
     public String getFlwref() {
-<span class="nc" id="L54">        return flwref;</span>
+<span class="fc" id="L54">        return flwref;</span>
     }
 
     /**
      * @param flwref the flwref to set
      */
     public Transaction setFlwref(String flwref) {
-<span class="nc" id="L61">        this.flwref = flwref;</span>
-<span class="nc" id="L62">        return this;</span>
+<span class="fc" id="L61">        this.flwref = flwref;</span>
+<span class="fc" id="L62">        return this;</span>
     }
 
     /**
      * @return the txRef
      */
     public String getTxRef() {
-<span class="nc" id="L69">        return txRef;</span>
+<span class="fc" id="L69">        return txRef;</span>
     }
 
     /**
      * @param txRef the txRef to set
      */
     public Transaction setTxRef(String txRef) {
-<span class="nc" id="L76">        this.txRef = txRef;</span>
-<span class="nc" id="L77">        return this;</span>
+<span class="fc" id="L76">        this.txRef = txRef;</span>
+<span class="fc" id="L77">        return this;</span>
     }
     
     

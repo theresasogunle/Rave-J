@@ -5,8 +5,6 @@
  */
 package com.rave;
 
-import java.io.FileNotFoundException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,9 +29,7 @@ public class Endpoints {
       public static String REFUNDVOID_ENDPOINT;
       public static String CHARGE_TIMEOUT_ENDPOINT;
       public static String VALIDATE_CHARGE_TIMEOUT_ENDPOINT;
-      public static String IP_ENDPOINT;
-      
-     
+    
       void init(){
       
           if(key.getEnvironment().equalsIgnoreCase("live")){
@@ -59,7 +55,7 @@ public class Endpoints {
         REFUNDVOID_ENDPOINT=url+"flwv3-pug/getpaidx/api/refundorvoid";
         CHARGE_TIMEOUT_ENDPOINT=url+"flwv3-pug/getpaidx/api/charge?use_polling=1";
         VALIDATE_CHARGE_TIMEOUT_ENDPOINT=url+"flwv3-pug/getpaidx/api/validatecharge?use_polling=1";
-        IP_ENDPOINT="http://bot.whatismyipaddress.com";
+      
       }
       
      public String getBankEndPoint(){
@@ -67,11 +63,7 @@ public class Endpoints {
          return BANK_ENDPOINT;
      
      }
-      public String getIPEndPoint(){
-         init();
-         return IP_ENDPOINT;
-     
-     }
+      
      public String getChargeEndPoint(){
          init();
          return CARD_CHARGE_ENDPOINT;

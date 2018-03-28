@@ -12,35 +12,35 @@ import org.json.JSONObject;
  *
  * @author Theresa
  */
-<span class="nc" id="L15">public class Refund {</span>
+<span class="fc" id="L15">public class Refund {</span>
     private ApiConnection apiConnection;
-<span class="nc" id="L17">    private Keys key= new Keys();</span>
-<span class="nc" id="L18">    Endpoints end= new Endpoints();</span>
+<span class="fc" id="L17">    private Keys key= new Keys();</span>
+<span class="fc" id="L18">    Endpoints end= new Endpoints();</span>
    private String ref;
 
     public JSONObject refund(){
-<span class="nc" id="L22">        this.apiConnection = new ApiConnection(end.getRefundEndPoint());</span>
-<span class="nc" id="L23">        ApiQuery api= new ApiQuery();</span>
+<span class="fc" id="L22">        this.apiConnection = new ApiConnection(end.getRefundEndPoint());</span>
+<span class="fc" id="L23">        ApiQuery api= new ApiQuery();</span>
 
-<span class="nc" id="L25">        api.putParams(&quot;ref&quot;, this.getRef());</span>
-<span class="nc" id="L26">        api.putParams(&quot;seckey&quot;, key.getSecretKey());</span>
+<span class="fc" id="L25">        api.putParams(&quot;ref&quot;, this.getRef());</span>
+<span class="fc" id="L26">        api.putParams(&quot;seckey&quot;, key.getSecretKey());</span>
 
 
-<span class="nc" id="L29">        return this.apiConnection.connectAndQuery(api);</span>
+<span class="fc" id="L29">        return this.apiConnection.connectAndQuery(api);</span>
     }
 
     /**
      * @return the ref
      */
     public String getRef() {
-<span class="nc" id="L36">        return ref;</span>
+<span class="fc" id="L36">        return ref;</span>
     }
 
     /**
      * @param ref the ref to set
      */
     public void setRef(String ref) {
-<span class="nc" id="L43">        this.ref = ref;</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L43">        this.ref = ref;</span>
+<span class="fc" id="L44">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

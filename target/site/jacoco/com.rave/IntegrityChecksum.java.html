@@ -16,217 +16,217 @@ import java.util.HashMap;
  *
  * @author Theresa
  */
-<span class="nc" id="L19">public class IntegrityChecksum {</span>
+<span class="fc" id="L19">public class IntegrityChecksum {</span>
       
-<span class="nc" id="L21">        Keys key=new Keys();</span>
+<span class="fc" id="L21">        Keys key=new Keys();</span>
     private String amount, payment_method,custom_description,custom_logo,country,currency,
            customer_email, customer_lastname,customer_firstname,customer_phone,txref;
     
     
     public String integrityChecksum(){
-<span class="nc" id="L27">         HashMap payload=new HashMap();</span>
+<span class="fc" id="L27">         HashMap payload=new HashMap();</span>
          
-<span class="nc" id="L29">        payload.put(&quot;PBFPubKey&quot; ,key.getPublicKey());</span>
-<span class="nc" id="L30">        payload.put(&quot;amount&quot; ,this.getAmount());</span>
-<span class="nc" id="L31">        payload.put(&quot;payment_method&quot;, this.getPayment_method());</span>
-<span class="nc" id="L32">        payload.put(&quot;custom_description&quot;,this.getCustom_description());</span>
-<span class="nc" id="L33">        payload.put(&quot;custom_logo&quot;,this.getCustom_logo());</span>
-<span class="nc" id="L34">        payload.put(&quot;country&quot;, this.getCountry());</span>
-<span class="nc" id="L35">        payload.put(&quot;currency&quot;, this.getCurrency());</span>
-<span class="nc" id="L36">        payload.put (&quot;customer_email&quot;, this.getCustomer_email());</span>
-<span class="nc" id="L37">        payload.put(  &quot;customer_firstname&quot;, this.getCustomer_firstname());</span>
-<span class="nc" id="L38">        payload.put(&quot;customer_lastname&quot;, this.getCustomer_lastname());</span>
-<span class="nc" id="L39">        payload.put(&quot;customer_phone&quot;, this.getCustomer_phone());</span>
-<span class="nc" id="L40">        payload.put( &quot;txref&quot;,this.getTxref());</span>
+<span class="fc" id="L29">        payload.put(&quot;PBFPubKey&quot; ,key.getPublicKey());</span>
+<span class="fc" id="L30">        payload.put(&quot;amount&quot; ,this.getAmount());</span>
+<span class="fc" id="L31">        payload.put(&quot;payment_method&quot;, this.getPayment_method());</span>
+<span class="fc" id="L32">        payload.put(&quot;custom_description&quot;,this.getCustom_description());</span>
+<span class="fc" id="L33">        payload.put(&quot;custom_logo&quot;,this.getCustom_logo());</span>
+<span class="fc" id="L34">        payload.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L35">        payload.put(&quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L36">        payload.put (&quot;customer_email&quot;, this.getCustomer_email());</span>
+<span class="fc" id="L37">        payload.put(  &quot;customer_firstname&quot;, this.getCustomer_firstname());</span>
+<span class="fc" id="L38">        payload.put(&quot;customer_lastname&quot;, this.getCustomer_lastname());</span>
+<span class="fc" id="L39">        payload.put(&quot;customer_phone&quot;, this.getCustomer_phone());</span>
+<span class="fc" id="L40">        payload.put( &quot;txref&quot;,this.getTxref());</span>
 
-<span class="nc" id="L42">        payload.put(&quot;PBFPubKey&quot;, key.getPublicKey());</span>
+<span class="fc" id="L42">        payload.put(&quot;PBFPubKey&quot;, key.getPublicKey());</span>
     
      
-<span class="nc" id="L45">       Object[] keys=payload.keySet().toArray();</span>
-<span class="nc" id="L46">       Arrays.sort(keys);</span>
-<span class="nc" id="L47">       String hashedPayload = &quot;&quot;;</span>
+<span class="fc" id="L45">       Object[] keys=payload.keySet().toArray();</span>
+<span class="fc" id="L46">       Arrays.sort(keys);</span>
+<span class="fc" id="L47">       String hashedPayload = &quot;&quot;;</span>
        
 
-<span class="nc bnc" id="L50" title="All 2 branches missed.">            for(int i=0;i&lt;keys.length;i++){</span>
-<span class="nc" id="L51">                 Object key= keys[i];</span>
-<span class="nc" id="L52">                 hashedPayload+=payload.get(key);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            for(int i=0;i&lt;keys.length;i++){</span>
+<span class="fc" id="L51">                 Object key= keys[i];</span>
+<span class="fc" id="L52">                 hashedPayload+=payload.get(key);</span>
             }
-<span class="nc" id="L54">              String  hashString  = hashedPayload + key.getSecretKey();</span>
-<span class="nc" id="L55">                String hash_string=&quot;&quot;;</span>
+<span class="fc" id="L54">              String  hashString  = hashedPayload + key.getSecretKey();</span>
+<span class="fc" id="L55">                String hash_string=&quot;&quot;;</span>
 
                 try{
-<span class="nc" id="L58">                        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
-<span class="nc" id="L59">                        byte[]  hash = digest.digest(hashString.getBytes(StandardCharsets.UTF_8));</span>
-<span class="nc" id="L60">                        hash_string=Base64.getEncoder().encodeToString(hash);</span>
+<span class="fc" id="L58">                        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="fc" id="L59">                        byte[]  hash = digest.digest(hashString.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L60">                        hash_string=Base64.getEncoder().encodeToString(hash);</span>
                       //  System.out.println(hash_string);
-<span class="nc" id="L62">                    }catch(Exception ex){}</span>
+<span class="pc" id="L62">                    }catch(Exception ex){}</span>
 
-<span class="nc" id="L64">                return hash_string;</span>
+<span class="fc" id="L64">                return hash_string;</span>
     }
 
     /**
      * @return the amount
      */
     public String getAmount() {
-<span class="nc" id="L71">        return amount;</span>
+<span class="fc" id="L71">        return amount;</span>
     }
 
     /**
      * @param amount the amount to set
      */
     public IntegrityChecksum setAmount(String amount) {
-<span class="nc" id="L78">        this.amount = amount;</span>
-<span class="nc" id="L79">        return this;</span>
+<span class="fc" id="L78">        this.amount = amount;</span>
+<span class="fc" id="L79">        return this;</span>
     }
 
     /**
      * @return the payment_method
      */
     public String getPayment_method() {
-<span class="nc" id="L86">        return payment_method;</span>
+<span class="fc" id="L86">        return payment_method;</span>
     }
 
     /**
      * @param payment_method the payment_method to set
      */
     public IntegrityChecksum setPayment_method(String payment_method) {
-<span class="nc" id="L93">        this.payment_method = payment_method;</span>
-<span class="nc" id="L94">        return this;</span>
+<span class="fc" id="L93">        this.payment_method = payment_method;</span>
+<span class="fc" id="L94">        return this;</span>
     }
 
     /**
      * @return the custom_description
      */
     public String getCustom_description() {
-<span class="nc" id="L101">        return custom_description;</span>
+<span class="fc" id="L101">        return custom_description;</span>
     }
 
     /**
      * @param custom_description the custom_description to set
      */
     public IntegrityChecksum setCustom_description(String custom_description) {
-<span class="nc" id="L108">        this.custom_description = custom_description;</span>
-<span class="nc" id="L109">        return this;</span>
+<span class="fc" id="L108">        this.custom_description = custom_description;</span>
+<span class="fc" id="L109">        return this;</span>
     }
 
     /**
      * @return the custom_logo
      */
     public String getCustom_logo() {
-<span class="nc" id="L116">        return custom_logo;</span>
+<span class="fc" id="L116">        return custom_logo;</span>
     }
 
     /**
      * @param custom_logo the custom_logo to set
      */
     public IntegrityChecksum setCustom_logo(String custom_logo) {
-<span class="nc" id="L123">        this.custom_logo = custom_logo;</span>
-<span class="nc" id="L124">        return this;</span>
+<span class="fc" id="L123">        this.custom_logo = custom_logo;</span>
+<span class="fc" id="L124">        return this;</span>
     }
 
     /**
      * @return the country
      */
     public String getCountry() {
-<span class="nc" id="L131">        return country;</span>
+<span class="fc" id="L131">        return country;</span>
     }
 
     /**
      * @param country the country to set
      */
     public IntegrityChecksum setCountry(String country) {
-<span class="nc" id="L138">        this.country = country;</span>
-<span class="nc" id="L139">        return this;</span>
+<span class="fc" id="L138">        this.country = country;</span>
+<span class="fc" id="L139">        return this;</span>
     }
 
     /**
      * @return the currency
      */
     public String getCurrency() {
-<span class="nc" id="L146">        return currency;</span>
+<span class="fc" id="L146">        return currency;</span>
     }
 
     /**
      * @param currency the currency to set
      */
     public IntegrityChecksum setCurrency(String currency) {
-<span class="nc" id="L153">        this.currency = currency;</span>
-<span class="nc" id="L154">        return this;</span>
+<span class="fc" id="L153">        this.currency = currency;</span>
+<span class="fc" id="L154">        return this;</span>
     }
 
     /**
      * @return the customer_email
      */
     public String getCustomer_email() {
-<span class="nc" id="L161">        return customer_email;</span>
+<span class="fc" id="L161">        return customer_email;</span>
     }
 
     /**
      * @param customer_email the customer_email to set
      */
     public IntegrityChecksum setCustomer_email(String customer_email) {
-<span class="nc" id="L168">        this.customer_email = customer_email;</span>
-<span class="nc" id="L169">        return this;</span>
+<span class="fc" id="L168">        this.customer_email = customer_email;</span>
+<span class="fc" id="L169">        return this;</span>
     }
 
     /**
      * @return the customer_lastname
      */
     public String getCustomer_lastname() {
-<span class="nc" id="L176">        return customer_lastname;</span>
+<span class="fc" id="L176">        return customer_lastname;</span>
     }
 
     /**
      * @param customer_lastname the customer_lastname to set
      */
     public IntegrityChecksum setCustomer_lastname(String customer_lastname) {
-<span class="nc" id="L183">        this.customer_lastname = customer_lastname;</span>
-<span class="nc" id="L184">        return this;</span>
+<span class="fc" id="L183">        this.customer_lastname = customer_lastname;</span>
+<span class="fc" id="L184">        return this;</span>
     }
 
     /**
      * @return the customer_firstname
      */
     public String getCustomer_firstname() {
-<span class="nc" id="L191">        return customer_firstname;</span>
+<span class="fc" id="L191">        return customer_firstname;</span>
     }
 
     /**
      * @param customer_firstname the customer_firstname to set
      */
     public IntegrityChecksum setCustomer_firstname(String customer_firstname) {
-<span class="nc" id="L198">        this.customer_firstname = customer_firstname;</span>
-<span class="nc" id="L199">        return this;</span>
+<span class="fc" id="L198">        this.customer_firstname = customer_firstname;</span>
+<span class="fc" id="L199">        return this;</span>
     }
 
     /**
      * @return the customer_phone
      */
     public String getCustomer_phone() {
-<span class="nc" id="L206">        return customer_phone;</span>
+<span class="fc" id="L206">        return customer_phone;</span>
     }
 
     /**
      * @param customer_phone the customer_phone to set
      */
     public IntegrityChecksum setCustomer_phone(String customer_phone) {
-<span class="nc" id="L213">        this.customer_phone = customer_phone;</span>
-<span class="nc" id="L214">        return this;</span>
+<span class="fc" id="L213">        this.customer_phone = customer_phone;</span>
+<span class="fc" id="L214">        return this;</span>
     }
 
     /**
      * @return the txref
      */
     public String getTxref() {
-<span class="nc" id="L221">        return txref;</span>
+<span class="fc" id="L221">        return txref;</span>
     }
 
     /**
      * @param txref the txref to set
      */
     public IntegrityChecksum setTxref(String txref) {
-<span class="nc" id="L228">        this.txref = txref;</span>
-<span class="nc" id="L229">        return this;</span>
+<span class="fc" id="L228">        this.txref = txref;</span>
+<span class="fc" id="L229">        return this;</span>
     }
     
   

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 /**
  * @author Theresa
  */
-<span class="nc" id="L13">public class Keys {</span>
+<span class="fc" id="L13">public class Keys {</span>
 
     public String SECRET_KEY;
     public String PUBLIC_KEY;
@@ -25,67 +25,67 @@ import org.json.JSONObject;
      */
       public  void initializeKeys() throws FileNotFoundException {
         JSONObject keyObject;
-<span class="nc" id="L28">        String fileContent = &quot;&quot;;</span>
-<span class="nc" id="L29">        File file = new File(&quot;env.json&quot;);</span>
-<span class="nc" id="L30">        Scanner scanner = new Scanner(file);</span>
+<span class="fc" id="L28">        String fileContent = &quot;&quot;;</span>
+<span class="fc" id="L29">        File file = new File(&quot;env.json&quot;);</span>
+<span class="fc" id="L30">        Scanner scanner = new Scanner(file);</span>
 
-<span class="nc bnc" id="L32" title="All 2 branches missed.">        while (scanner.hasNext()) {</span>
-<span class="nc" id="L33">            fileContent += scanner.nextLine();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        while (scanner.hasNext()) {</span>
+<span class="fc" id="L33">            fileContent += scanner.nextLine();</span>
         }
         try{
-<span class="nc" id="L36">        keyObject = new JSONObject(fileContent).getJSONObject(&quot;API_KEYS&quot;);</span>
+<span class="fc" id="L36">        keyObject = new JSONObject(fileContent).getJSONObject(&quot;API_KEYS&quot;);</span>
       
-<span class="nc" id="L38">        this.env= keyObject.getString(&quot;ENV&quot;);</span>
-<span class="nc" id="L39">        this.SECRET_KEY = keyObject.getString(&quot;SECRET_KEY&quot;);</span>
-<span class="nc" id="L40">        this.PUBLIC_KEY = keyObject.getString(&quot;PUBLIC_KEY&quot;);</span>
+<span class="fc" id="L38">        this.env= keyObject.getString(&quot;ENV&quot;);</span>
+<span class="fc" id="L39">        this.SECRET_KEY = keyObject.getString(&quot;SECRET_KEY&quot;);</span>
+<span class="fc" id="L40">        this.PUBLIC_KEY = keyObject.getString(&quot;PUBLIC_KEY&quot;);</span>
        
-<span class="nc" id="L42">        }catch(Exception e){System.out.println(&quot;Cant get keys&quot;);}</span>
-<span class="nc" id="L43">    }</span>
+<span class="pc" id="L42">        }catch(Exception e){System.out.println(&quot;Cant get keys&quot;);}</span>
+<span class="fc" id="L43">    }</span>
 
 
     
          public String getPublicKey(){
-<span class="nc" id="L48">        Keys key= new Keys();</span>
+<span class="fc" id="L48">        Keys key= new Keys();</span>
 
                try {
-<span class="nc" id="L51">                   key.initializeKeys();</span>
+<span class="fc" id="L51">                   key.initializeKeys();</span>
 <span class="nc" id="L52">               } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L53">                   System.out.print(&quot;Required Keys.json file could not be found.&quot;);</span>
-<span class="nc" id="L54">                   e.printStackTrace();</span>
-<span class="nc" id="L55">               }</span>
-<span class="nc" id="L56">               String public_key=key.PUBLIC_KEY;</span>
+                
+<span class="fc" id="L55">               }</span>
+<span class="fc" id="L56">               String public_key=key.PUBLIC_KEY;</span>
                  
-<span class="nc" id="L58">               return public_key;</span>
+<span class="fc" id="L58">               return public_key;</span>
         
         }
      public String getSecretKey(){
-<span class="nc" id="L62">        Keys key= new Keys();</span>
+<span class="fc" id="L62">        Keys key= new Keys();</span>
 
                try {
-<span class="nc" id="L65">                   key.initializeKeys();</span>
+<span class="fc" id="L65">                   key.initializeKeys();</span>
 <span class="nc" id="L66">               } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L67">                   System.out.print(&quot;Required Keys.json file could not be found.&quot;);</span>
-<span class="nc" id="L68">                   e.printStackTrace();</span>
-<span class="nc" id="L69">               }</span>
-<span class="nc" id="L70">               String secret_key=key.SECRET_KEY;</span>
+               
+<span class="fc" id="L69">               }</span>
+<span class="fc" id="L70">               String secret_key=key.SECRET_KEY;</span>
                //  System.out.println(public_key);
                  
-<span class="nc" id="L73">                 return secret_key;</span>
+<span class="fc" id="L73">                 return secret_key;</span>
         
         }
     protected void setEnvironment(String env){
 <span class="nc" id="L77">    this.env=env;</span>
 <span class="nc" id="L78">    }</span>
     protected String getEnvironment() {
-<span class="nc" id="L80">        Keys key= new Keys();</span>
+<span class="fc" id="L80">        Keys key= new Keys();</span>
          try {
-<span class="nc" id="L82">            key.initializeKeys();</span>
+<span class="fc" id="L82">            key.initializeKeys();</span>
 <span class="nc" id="L83">        } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L84">            System.out.print(&quot;Required Keys.json file could not be found.&quot;);</span>
-<span class="nc" id="L85">            e.printStackTrace();</span>
-<span class="nc" id="L86">        }</span>
-<span class="nc" id="L87">            String envv=key.env;</span>
-<span class="nc" id="L88">        return envv;</span>
+          
+<span class="fc" id="L86">        }</span>
+<span class="fc" id="L87">            String envv=key.env;</span>
+<span class="fc" id="L88">        return envv;</span>
     }
     
     

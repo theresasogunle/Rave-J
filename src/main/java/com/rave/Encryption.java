@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -80,36 +81,12 @@ public class Encryption {
 
         } catch (Exception e) {
 
-            e.printStackTrace();
-            return "";
+                       return "";
         }
         
     }
 
-    /**
-    *
-    * @param api(JSON object)
-    * @return String
-    */
-    
-    public String encryptParameters(JSONObject api) {
-           
-        try{
-            api.put("PBFPubKey",keys.getPublicKey());
-        }catch(Exception ex){}
-        
-      
-        
-        String message= api.toString();
-        
-        String encrypt_secret_key=getKey(keys.getSecretKey());
-        String encrypted_message= encryptData(message,encrypt_secret_key);
-
-
-        return encrypted_message;
-
-    }
-
+/*
 
     public String encryptParametersPreAuth(JSONObject api){
            
@@ -129,6 +106,6 @@ public class Encryption {
 
     }
         
-       
+      */ 
     
 }

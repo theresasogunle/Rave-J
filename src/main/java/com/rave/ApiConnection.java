@@ -5,9 +5,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import java.io.FileNotFoundException;
 import org.json.JSONObject;
-import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -27,7 +25,7 @@ import org.apache.http.impl.client.HttpClients;
  */
 public class ApiConnection {
 
-    private String url;
+    final private String url;
   
 
     /**
@@ -52,10 +50,8 @@ public class ApiConnection {
                     .build();
             Unirest.setHttpClient(httpClient);
 
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ApiConnection.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyManagementException ex) {
-            Logger.getLogger(ApiConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException | KeyManagementException ex) {
+         
         }
     }
 
@@ -72,18 +68,11 @@ public class ApiConnection {
                     .header("Accept", "application/json")
                     .fields(query.getParams())
                     .asJson();
-            
-           
-            
+  
             try{
             return queryForResponse.getBody().getObject();
             }catch(Exception ex){}
         } catch (UnirestException e) {
-            e.printStackTrace();
-        
-    
-      
-    
     }
          return  null;
     }
@@ -97,12 +86,10 @@ public class ApiConnection {
         try {
             HttpResponse<JsonNode> queryForResponse = Unirest.post(url)
                     .header("Accept", "application/json")
-                    
-                    .fields(query)
+                  
                     .asJson();
             return queryForResponse.getBody().getObject();
         } catch (UnirestException e) {
-            e.printStackTrace();
         }
         return null;
     }

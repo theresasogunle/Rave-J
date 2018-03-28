@@ -26,8 +26,9 @@ public class AccountCharge {
     private Endpoints end= new Endpoints();
     Encryption e=new Encryption();
     
-    private String accountnumber,accountbank,currency,country,amount,email,phonenumber,firstname,lastname,IP,
-            txRef,passcode,device_fingerprint;
+    private String accountnumber,accountbank,currency,country,
+               amount,email,phonenumber,firstname,lastname,IP,
+               txRef,passcode,device_fingerprint;
     
     private String transaction_reference;//to be called
     private String otp;//to be called

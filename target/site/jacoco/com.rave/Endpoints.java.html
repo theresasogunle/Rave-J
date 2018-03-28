@@ -5,17 +5,15 @@
  */
 package com.rave;
 
-import java.io.FileNotFoundException;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Theresa
  */
-<span class="nc" id="L15">public class Endpoints {</span>
-<span class="nc" id="L16">       Keys key= new Keys();</span>
-<span class="nc" id="L17">      String staging_url=&quot;http://flw-pms-dev.eu-west-1.elasticbeanstalk.com/&quot;;</span>
-<span class="nc" id="L18">      String live_url=&quot;https://api.ravepay.co/&quot;;</span>
+<span class="fc" id="L13">public class Endpoints {</span>
+<span class="fc" id="L14">       Keys key= new Keys();</span>
+<span class="fc" id="L15">      String staging_url=&quot;http://flw-pms-dev.eu-west-1.elasticbeanstalk.com/&quot;;</span>
+<span class="fc" id="L16">      String live_url=&quot;https://api.ravepay.co/&quot;;</span>
       String  url;
       public  String BANK_ENDPOINT;
       public static String CARD_CHARGE_ENDPOINT;
@@ -31,100 +29,94 @@ import javax.swing.JOptionPane;
       public static String REFUNDVOID_ENDPOINT;
       public static String CHARGE_TIMEOUT_ENDPOINT;
       public static String VALIDATE_CHARGE_TIMEOUT_ENDPOINT;
-      public static String IP_ENDPOINT;
-      
-     
+    
       void init(){
       
-<span class="nc bnc" id="L39" title="All 2 branches missed.">          if(key.getEnvironment().equalsIgnoreCase(&quot;live&quot;)){</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">          if(key.getEnvironment().equalsIgnoreCase(&quot;live&quot;)){</span>
            
-<span class="nc" id="L41">            url=live_url;</span>
+<span class="nc" id="L37">            url=live_url;</span>
           
           }
           else {
-<span class="nc" id="L45">          url=staging_url;</span>
+<span class="fc" id="L41">          url=staging_url;</span>
           }
          
-<span class="nc" id="L48">       BANK_ENDPOINT= url+&quot;/flwv3-pug/getpaidx/api/flwpbf-banks.js?json=1&quot;;</span>
-<span class="nc" id="L49">       CARD_CHARGE_ENDPOINT =url+&quot;/flwv3-pug/getpaidx/api/charge&quot;;</span>
-<span class="nc" id="L50">       CARD_VALIDATE_ENDPOINT = url+&quot;flwv3-pug/getpaidx/api/validatecharge&quot;;</span>
-<span class="nc" id="L51">       TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/charge?use_polling=1&quot;;</span>
-<span class="nc" id="L52">       POLL_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/requests/RCORE_CHREQ_3FC28781846AD8E1C598&quot;;</span>
-<span class="nc" id="L53">        FEES_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/fee&quot;;</span>
-<span class="nc" id="L54">       REFUND_ENDPOINT=url+&quot;gpx/merchant/transactions/refund&quot;;</span>
-<span class="nc" id="L55">       FOREX_ENDPOINT=url+&quot;/flwv3-pug/getpaidx/api/forex&quot;;</span>
-<span class="nc" id="L56">       VERIFY_TRANSACTION_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/verify&quot;;</span>
-<span class="nc" id="L57">       VERIFY_XREQUERY_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/xrequery&quot;;</span>
-<span class="nc" id="L58">        CAPTURE_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/capture&quot;;</span>
-<span class="nc" id="L59">        REFUNDVOID_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/refundorvoid&quot;;</span>
-<span class="nc" id="L60">        CHARGE_TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/charge?use_polling=1&quot;;</span>
-<span class="nc" id="L61">        VALIDATE_CHARGE_TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/validatecharge?use_polling=1&quot;;</span>
-<span class="nc" id="L62">        IP_ENDPOINT=&quot;http://bot.whatismyipaddress.com&quot;;</span>
-<span class="nc" id="L63">      }</span>
+<span class="fc" id="L44">       BANK_ENDPOINT= url+&quot;/flwv3-pug/getpaidx/api/flwpbf-banks.js?json=1&quot;;</span>
+<span class="fc" id="L45">       CARD_CHARGE_ENDPOINT =url+&quot;/flwv3-pug/getpaidx/api/charge&quot;;</span>
+<span class="fc" id="L46">       CARD_VALIDATE_ENDPOINT = url+&quot;flwv3-pug/getpaidx/api/validatecharge&quot;;</span>
+<span class="fc" id="L47">       TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/charge?use_polling=1&quot;;</span>
+<span class="fc" id="L48">       POLL_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/requests/RCORE_CHREQ_3FC28781846AD8E1C598&quot;;</span>
+<span class="fc" id="L49">        FEES_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/fee&quot;;</span>
+<span class="fc" id="L50">       REFUND_ENDPOINT=url+&quot;gpx/merchant/transactions/refund&quot;;</span>
+<span class="fc" id="L51">       FOREX_ENDPOINT=url+&quot;/flwv3-pug/getpaidx/api/forex&quot;;</span>
+<span class="fc" id="L52">       VERIFY_TRANSACTION_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/verify&quot;;</span>
+<span class="fc" id="L53">       VERIFY_XREQUERY_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/xrequery&quot;;</span>
+<span class="fc" id="L54">        CAPTURE_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/capture&quot;;</span>
+<span class="fc" id="L55">        REFUNDVOID_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/refundorvoid&quot;;</span>
+<span class="fc" id="L56">        CHARGE_TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/charge?use_polling=1&quot;;</span>
+<span class="fc" id="L57">        VALIDATE_CHARGE_TIMEOUT_ENDPOINT=url+&quot;flwv3-pug/getpaidx/api/validatecharge?use_polling=1&quot;;</span>
+      
+<span class="fc" id="L59">      }</span>
       
      public String getBankEndPoint(){
-<span class="nc" id="L66">         init();</span>
-<span class="nc" id="L67">         return BANK_ENDPOINT;</span>
+<span class="fc" id="L62">         init();</span>
+<span class="fc" id="L63">         return BANK_ENDPOINT;</span>
      
      }
-      public String getIPEndPoint(){
-<span class="nc" id="L71">         init();</span>
-<span class="nc" id="L72">         return IP_ENDPOINT;</span>
-     
-     }
+      
      public String getChargeEndPoint(){
-<span class="nc" id="L76">         init();</span>
-<span class="nc" id="L77">         return CARD_CHARGE_ENDPOINT;</span>
+<span class="fc" id="L68">         init();</span>
+<span class="fc" id="L69">         return CARD_CHARGE_ENDPOINT;</span>
      
      }
      public String getValidateChargeEndPoint(){
-<span class="nc" id="L81">         init();</span>
-<span class="nc" id="L82">         return CARD_VALIDATE_ENDPOINT;</span>
+<span class="fc" id="L73">         init();</span>
+<span class="fc" id="L74">         return CARD_VALIDATE_ENDPOINT;</span>
      
      }
      public String getFeesEndPoint(){
-<span class="nc" id="L86">         init();</span>
-<span class="nc" id="L87">         return FEES_ENDPOINT;</span>
+<span class="fc" id="L78">         init();</span>
+<span class="fc" id="L79">         return FEES_ENDPOINT;</span>
      
      }
      public String getRefundEndPoint(){
-<span class="nc" id="L91">         init();</span>
-<span class="nc" id="L92">         return REFUND_ENDPOINT;</span>
+<span class="fc" id="L83">         init();</span>
+<span class="fc" id="L84">         return REFUND_ENDPOINT;</span>
      
      }
      public String getForexEndPoint(){
-<span class="nc" id="L96">         init();</span>
-<span class="nc" id="L97">         return FOREX_ENDPOINT;</span>
+<span class="fc" id="L88">         init();</span>
+<span class="fc" id="L89">         return FOREX_ENDPOINT;</span>
      
      }
      public String getVerifyEndPoint(){
-<span class="nc" id="L101">         init();</span>
-<span class="nc" id="L102">         return VERIFY_TRANSACTION_ENDPOINT;</span>
+<span class="fc" id="L93">         init();</span>
+<span class="fc" id="L94">         return VERIFY_TRANSACTION_ENDPOINT;</span>
      
      }
      public String getVerifyXrequeryEndPoint(){
-<span class="nc" id="L106">         init();</span>
-<span class="nc" id="L107">         return VERIFY_XREQUERY_ENDPOINT;</span>
+<span class="fc" id="L98">         init();</span>
+<span class="fc" id="L99">         return VERIFY_XREQUERY_ENDPOINT;</span>
      
      }
      public String getCaptureEndPoint(){
-<span class="nc" id="L111">         init();</span>
-<span class="nc" id="L112">         return CAPTURE_ENDPOINT;</span>
+<span class="fc" id="L103">         init();</span>
+<span class="fc" id="L104">         return CAPTURE_ENDPOINT;</span>
      
      }
      public String getRefundOrVoidEndPoint(){
-<span class="nc" id="L116">         init();</span>
-<span class="nc" id="L117">         return  REFUNDVOID_ENDPOINT;</span>
+<span class="fc" id="L108">         init();</span>
+<span class="fc" id="L109">         return  REFUNDVOID_ENDPOINT;</span>
      
      }
       public String getChargeTimeoutEndpoint(){
-<span class="nc" id="L121">         init();</span>
-<span class="nc" id="L122">         return CHARGE_TIMEOUT_ENDPOINT;</span>
+<span class="fc" id="L113">         init();</span>
+<span class="fc" id="L114">         return CHARGE_TIMEOUT_ENDPOINT;</span>
      
      }
         public String getValidateChargeTimeoutEndpoint(){
-<span class="nc" id="L126">         init();</span>
-<span class="nc" id="L127">         return VALIDATE_CHARGE_TIMEOUT_ENDPOINT;</span>
+<span class="fc" id="L118">         init();</span>
+<span class="fc" id="L119">         return VALIDATE_CHARGE_TIMEOUT_ENDPOINT;</span>
      
      }
       
