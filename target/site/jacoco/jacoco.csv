@@ -1,18 +1,18 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Rave,com.rave,ApiQuery,0,18,0,0,0,6,0,3,0,3
-Rave,com.rave,ExchangeRates,0,75,0,0,0,19,0,8,0,8
-Rave,com.rave,ApiConnection,28,62,0,0,14,23,1,4,1,4
-Rave,com.rave,PreAuthorization,0,386,0,0,0,105,0,41,0,41
-Rave,com.rave,CardCharge,24,429,1,1,9,112,6,46,5,46
-Rave,com.rave,Charge,0,77,0,0,0,16,0,3,0,3
-Rave,com.rave,IntegrityChecksum,1,240,0,2,0,62,0,25,0,24
-Rave,com.rave,Refund,0,48,0,0,0,11,0,4,0,4
-Rave,com.rave,AccountCharge,3,284,0,0,1,77,1,35,1,35
-Rave,com.rave,Transaction,0,105,0,0,0,23,0,7,0,7
-Rave,com.rave,Bank,0,20,0,0,0,4,0,2,0,2
-Rave,com.rave,Encryption,18,125,0,2,8,23,0,5,0,4
-Rave,com.rave,Fees,0,118,0,0,0,27,0,9,0,9
-Rave,com.rave,AlternativePayment,8,435,0,0,3,102,2,32,2,32
-Rave,com.rave,Keys,20,89,0,2,8,27,1,6,1,5
-Rave,com.rave,Endpoints,5,215,1,1,1,45,1,14,0,14
-Rave,com.rave,Polling,0,97,0,0,0,20,0,3,0,3
+Rave Java,com.github.theresasogunle,Fees,0,118,0,0,0,27,0,9,0,9
+Rave Java,com.github.theresasogunle,ApiQuery,0,18,0,0,0,6,0,3,0,3
+Rave Java,com.github.theresasogunle,Charge,0,77,0,0,0,16,0,3,0,3
+Rave Java,com.github.theresasogunle,AccountCharge,3,284,0,0,1,77,1,35,1,35
+Rave Java,com.github.theresasogunle,AlternativePayment,8,435,0,0,3,102,2,32,2,32
+Rave Java,com.github.theresasogunle,CardCharge,24,429,1,1,9,112,6,46,5,46
+Rave Java,com.github.theresasogunle,Keys,20,89,0,2,8,27,1,6,1,5
+Rave Java,com.github.theresasogunle,IntegrityChecksum,1,240,0,2,0,62,0,25,0,24
+Rave Java,com.github.theresasogunle,Bank,0,20,0,0,0,4,0,2,0,2
+Rave Java,com.github.theresasogunle,PreAuthorization,0,386,0,0,0,105,0,41,0,41
+Rave Java,com.github.theresasogunle,Transaction,0,105,0,0,0,23,0,7,0,7
+Rave Java,com.github.theresasogunle,Refund,0,48,0,0,0,11,0,4,0,4
+Rave Java,com.github.theresasogunle,ExchangeRates,0,75,0,0,0,19,0,8,0,8
+Rave Java,com.github.theresasogunle,ApiConnection,28,62,0,0,14,23,1,4,1,4
+Rave Java,com.github.theresasogunle,Polling,0,97,0,0,0,20,0,3,0,3
+Rave Java,com.github.theresasogunle,Endpoints,5,215,1,1,1,45,1,14,0,14
+Rave Java,com.github.theresasogunle,Encryption,18,125,0,2,8,23,0,5,0,4

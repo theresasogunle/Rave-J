@@ -17,7 +17,6 @@ Any value defined here will override the pom.xml file value but is only applicab
     </properties>
     <config-data xmlns="http://www.netbeans.org/ns/maven-config-data/1">
         <configurations>
-            <configuration id="1" profiles=""/>
             <configuration id="2" profiles=""/>
             <configuration id="3" profiles="">
                 <property name="sonar.organization">tessa \</property>
@@ -25,6 +24,7 @@ Any value defined here will override the pom.xml file value but is only applicab
                 <property name="sonar.login">b27da6ccb9de90d858ceecf6c8b8140450425c4f</property>
             </configuration>
             <configuration id="4" profiles=""/>
+            <configuration id="7" profiles="mvn clean deploy"/>
         </configurations>
     </config-data>
 </project-shared-configuration>
