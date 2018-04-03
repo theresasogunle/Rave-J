@@ -21,7 +21,7 @@ public class Keys {
     /**
      * Used to initialise all necessary API keys
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException throws a file not found exception
      */
       public  void initializeKeys() throws FileNotFoundException {
         JSONObject keyObject;

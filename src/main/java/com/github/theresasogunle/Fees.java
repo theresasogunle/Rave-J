@@ -62,6 +62,7 @@ public class Fees {
 
     /**
      * @param amount the amount to set
+     *  @return Fees
      */
     public Fees setAmount(String amount) {
         this.amount = amount;
@@ -77,6 +78,7 @@ public class Fees {
 
     /**
      * @param currency the currency to set
+     *  @return Fees
      */
     public Fees setCurrency(String currency) {
         this.currency = currency;
@@ -92,6 +94,7 @@ public class Fees {
 
     /**
      * @param card6 the card6 to set
+     *  @return Fees
      */
     public Fees setCard6(String card6) {
         this.card6 = card6;

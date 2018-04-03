@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 public class Polling {
           ApiConnection apiConnection;
-          private Endpoints ed=new Endpoints();
+          private final Endpoints ed=new Endpoints();
           Encryption e=new Encryption();
           Keys key=new Keys();
   
@@ -26,7 +26,7 @@ public class Polling {
       
         String message= json.toString();
         
-        String encrypt_secret_key=e.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
         String client= encryptData(message,encrypt_secret_key);
       
         String alg="3DES-24";

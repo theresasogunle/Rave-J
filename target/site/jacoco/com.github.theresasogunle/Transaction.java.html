@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 <span class="fc" id="L15">public class Transaction {</span>
     ApiConnection apiConnection;
-<span class="fc" id="L17">    private Keys key=new Keys();</span>
+<span class="fc" id="L17">    private final Keys key=new Keys();</span>
 <span class="fc" id="L18">    Endpoints end= new Endpoints();</span>
    private String  flwref, txRef;
     
@@ -56,25 +56,27 @@ import org.json.JSONObject;
 
     /**
      * @param flwref the flwref to set
+     * @return Transaction
      */
     public Transaction setFlwref(String flwref) {
-<span class="fc" id="L61">        this.flwref = flwref;</span>
-<span class="fc" id="L62">        return this;</span>
+<span class="fc" id="L62">        this.flwref = flwref;</span>
+<span class="fc" id="L63">        return this;</span>
     }
 
     /**
      * @return the txRef
      */
     public String getTxRef() {
-<span class="fc" id="L69">        return txRef;</span>
+<span class="fc" id="L70">        return txRef;</span>
     }
 
     /**
      * @param txRef the txRef to set
+     * @return Transaction
      */
     public Transaction setTxRef(String txRef) {
-<span class="fc" id="L76">        this.txRef = txRef;</span>
-<span class="fc" id="L77">        return this;</span>
+<span class="fc" id="L78">        this.txRef = txRef;</span>
+<span class="fc" id="L79">        return this;</span>
     }
     
     

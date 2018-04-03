@@ -5,8 +5,8 @@
  * and open the template in the editor.
  */
 package com.github.theresasogunle;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.security.NoSuchAlgorithmException;
@@ -19,69 +19,66 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.json.JSONException;
-import org.json.JSONObject;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 
-<span class="fc" id="L30">public class Encryption {</span>
+<span class="fc" id="L29">public class Encryption {</span>
     private String key;
     private ApiConnection apiConnection;
-<span class="fc" id="L33">    Keys keys= new Keys();</span>
+<span class="fc" id="L32">    Keys keys= new Keys();</span>
     String cardno,currency,country,cvv,amount,expiryyear, expirymonth,suggested_auth, pin, email,  IP,txRef,device_fingerprint,redirectUrl;
       
         
     // Method to turn bytes in hex
     public static String toHexStr(byte[] bytes){
 
-<span class="fc" id="L40">        StringBuilder builder = new StringBuilder();</span>
+<span class="fc" id="L39">        StringBuilder builder = new StringBuilder();</span>
 
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        for(int i = 0; i &lt; bytes.length; i++ ){</span>
-<span class="fc" id="L43">            builder.append(String.format(&quot;%02x&quot;, bytes[i]));</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for(int i = 0; i &lt; bytes.length; i++ ){</span>
+<span class="fc" id="L42">            builder.append(String.format(&quot;%02x&quot;, bytes[i]));</span>
         }
 
-<span class="fc" id="L46">        return builder.toString();</span>
+<span class="fc" id="L45">        return builder.toString();</span>
     }
 
     // this is the getKey function that generates an encryption Key for you by passing your Secret Key as a parameter.
     public static String getKey(String seedKey) {
         try {
-<span class="fc" id="L52">            MessageDigest md = MessageDigest.getInstance(&quot;md5&quot;);</span>
-<span class="fc" id="L53">            byte[] hashedString = md.digest(seedKey.getBytes(&quot;utf-8&quot;));</span>
-<span class="fc" id="L54">            byte[] subHashString = toHexStr(Arrays.copyOfRange(hashedString, hashedString.length - 12, hashedString.length)).getBytes(&quot;utf-8&quot;);</span>
-<span class="fc" id="L55">            String subSeedKey = seedKey.replace(&quot;FLWSECK-&quot;, &quot;&quot;);</span>
-<span class="fc" id="L56">            subSeedKey = subSeedKey.substring(0, 12);</span>
-<span class="fc" id="L57">            byte[] combineArray = new byte[24];</span>
-<span class="fc" id="L58">            System.arraycopy(subSeedKey.getBytes(), 0, combineArray, 0, 12);</span>
-<span class="fc" id="L59">            System.arraycopy(subHashString, subHashString.length - 12, combineArray, 12, 12);</span>
-<span class="fc" id="L60">            return new String(combineArray);</span>
-<span class="nc" id="L61">        } catch (NoSuchAlgorithmException ex) {</span>
-<span class="nc" id="L62">            Logger.getGlobal().log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L63">        } catch (UnsupportedEncodingException ex) {</span>
-<span class="nc" id="L64">            Logger.getGlobal().log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L65">        }</span>
-<span class="nc" id="L66">        return null;</span>
+<span class="fc" id="L51">            MessageDigest md = MessageDigest.getInstance(&quot;md5&quot;);</span>
+<span class="fc" id="L52">            byte[] hashedString = md.digest(seedKey.getBytes(&quot;utf-8&quot;));</span>
+<span class="fc" id="L53">            byte[] subHashString = toHexStr(Arrays.copyOfRange(hashedString, hashedString.length - 12, hashedString.length)).getBytes(&quot;utf-8&quot;);</span>
+<span class="fc" id="L54">            String subSeedKey = seedKey.replace(&quot;FLWSECK-&quot;, &quot;&quot;);</span>
+<span class="fc" id="L55">            subSeedKey = subSeedKey.substring(0, 12);</span>
+<span class="fc" id="L56">            byte[] combineArray = new byte[24];</span>
+<span class="fc" id="L57">            System.arraycopy(subSeedKey.getBytes(), 0, combineArray, 0, 12);</span>
+<span class="fc" id="L58">            System.arraycopy(subHashString, subHashString.length - 12, combineArray, 12, 12);</span>
+<span class="fc" id="L59">            return new String(combineArray);</span>
+<span class="nc" id="L60">        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {</span>
+<span class="nc" id="L61">            Logger.getGlobal().log(Level.SEVERE, null, ex);</span>
+        }
+<span class="nc" id="L63">        return null;</span>
     }
 
     // This is the encryption function that encrypts your payload by passing the stringified format and your encryption Key.
     public static String encryptData(String message, String _encryptionKey)  {
         try {
-<span class="fc" id="L72">            final byte[] digestOfPassword = _encryptionKey.getBytes(&quot;utf-8&quot;);</span>
-<span class="fc" id="L73">            final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);</span>
+<span class="fc" id="L69">            final byte[] digestOfPassword = _encryptionKey.getBytes(&quot;utf-8&quot;);</span>
+<span class="fc" id="L70">            final byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);</span>
 
-<span class="fc" id="L75">            final SecretKey key = new SecretKeySpec( keyBytes , &quot;DESede&quot;);</span>
-<span class="fc" id="L76">            final Cipher cipher = Cipher.getInstance(&quot;DESede/ECB/PKCS5Padding&quot;);</span>
-<span class="fc" id="L77">            cipher.init(Cipher.ENCRYPT_MODE, key);</span>
-<span class="fc" id="L78">            final byte[] plainTextBytes = message.getBytes(&quot;utf-8&quot;);</span>
-<span class="fc" id="L79">            final byte[] cipherText = cipher.doFinal(plainTextBytes);</span>
-<span class="fc" id="L80">            return Base64.getEncoder().encodeToString(cipherText);</span>
+<span class="fc" id="L72">            final SecretKey key = new SecretKeySpec( keyBytes , &quot;DESede&quot;);</span>
+<span class="fc" id="L73">            final Cipher cipher = Cipher.getInstance(&quot;DESede/ECB/PKCS5Padding&quot;);</span>
+<span class="fc" id="L74">            cipher.init(Cipher.ENCRYPT_MODE, key);</span>
+<span class="fc" id="L75">            final byte[] plainTextBytes = message.getBytes(&quot;utf-8&quot;);</span>
+<span class="fc" id="L76">            final byte[] cipherText = cipher.doFinal(plainTextBytes);</span>
+<span class="fc" id="L77">            return Base64.getEncoder().encodeToString(cipherText);</span>
 
-<span class="nc" id="L82">        } catch (Exception e) {</span>
+<span class="nc" id="L79">        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {</span>
 
-<span class="nc" id="L84">                       return &quot;&quot;;</span>
+<span class="nc" id="L81">                       return &quot;&quot;;</span>
         }
         
     }

@@ -5,7 +5,7 @@
  */
 package com.github.theresasogunle;
 
-import java.io.FileNotFoundException;
+
 import org.json.JSONObject;
 
 /**
@@ -21,8 +21,7 @@ import org.json.JSONObject;
     private String destination_currency;
      /**
  *
- * @params
- * origin_currency,destination_currency , amount
+ *
  * @return JSONObject
  */
      
@@ -30,17 +29,17 @@ import org.json.JSONObject;
     public JSONObject forex(){
 
         
-<span class="fc" id="L33">      this.apiConnection = new ApiConnection(end.getForexEndPoint());</span>
-<span class="fc" id="L34">      ApiQuery api= new ApiQuery();</span>
+<span class="fc" id="L32">      this.apiConnection = new ApiConnection(end.getForexEndPoint());</span>
+<span class="fc" id="L33">      ApiQuery api= new ApiQuery();</span>
      
       //API PARAMETERS
-<span class="fc" id="L37">      api.putParams(&quot;SECKEY&quot;,key.getSecretKey());</span>
-<span class="fc" id="L38">      api.putParams(&quot;origin_currency&quot;, this.getOrigin_currency());</span>
-<span class="fc" id="L39">      api.putParams(&quot;destination_currency&quot;, this.getDestination_currency());</span>
-<span class="fc" id="L40">      api.putParams(&quot;amount&quot;, this.getAmount());</span>
+<span class="fc" id="L36">      api.putParams(&quot;SECKEY&quot;,key.getSecretKey());</span>
+<span class="fc" id="L37">      api.putParams(&quot;origin_currency&quot;, this.getOrigin_currency());</span>
+<span class="fc" id="L38">      api.putParams(&quot;destination_currency&quot;, this.getDestination_currency());</span>
+<span class="fc" id="L39">      api.putParams(&quot;amount&quot;, this.getAmount());</span>
     
       
-<span class="fc" id="L43">      return this.apiConnection.connectAndQuery(api);</span>
+<span class="fc" id="L42">      return this.apiConnection.connectAndQuery(api);</span>
     
     }
 
@@ -48,11 +47,12 @@ import org.json.JSONObject;
      * @return the amount
      */
     public String getAmount() {
-<span class="fc" id="L51">        return amount;</span>
+<span class="fc" id="L50">        return amount;</span>
     }
 
     /**
      * @param amount the amount to set
+     * @return ExchangeRates
      */
     public ExchangeRates setAmount(String amount) {
 <span class="fc" id="L58">        this.amount = amount;</span>
@@ -68,25 +68,27 @@ import org.json.JSONObject;
 
     /**
      * @param origin_currency the origin_currency to set
+     *  @return ExchangeRates
      */
     public ExchangeRates setOrigin_currency(String origin_currency) {
-<span class="fc" id="L73">        this.origin_currency = origin_currency;</span>
-<span class="fc" id="L74">        return this;</span>
+<span class="fc" id="L74">        this.origin_currency = origin_currency;</span>
+<span class="fc" id="L75">        return this;</span>
     }
 
     /**
      * @return the destination_currency
      */
     public String getDestination_currency() {
-<span class="fc" id="L81">        return destination_currency;</span>
+<span class="fc" id="L82">        return destination_currency;</span>
     }
 
     /**
      * @param destination_currency the destination_currency to set
+     *  @return ExchangeRates
      */
     public ExchangeRates setDestination_currency(String destination_currency) {
-<span class="fc" id="L88">        this.destination_currency = destination_currency;</span>
-<span class="fc" id="L89">        return this;</span>
+<span class="fc" id="L90">        this.destination_currency = destination_currency;</span>
+<span class="fc" id="L91">        return this;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

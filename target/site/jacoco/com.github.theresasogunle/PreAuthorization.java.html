@@ -75,7 +75,7 @@ import org.json.JSONObject;
 <span class="fc" id="L75">         String message= json.toString();</span>
 <span class="fc" id="L76">         String secret_key=&quot;FLWSECK-c51891678d48c39eff3701ff686bdb69-X&quot;;</span>
          
-<span class="fc" id="L78">        String encrypt_secret_key=e.getKey(secret_key);</span>
+<span class="fc" id="L78">        String encrypt_secret_key=Encryption.getKey(secret_key);</span>
 <span class="fc" id="L79">        String client= encryptData(message,encrypt_secret_key);</span>
 <span class="fc" id="L80">       String alg=&quot;3DES-24&quot;;</span>
        
@@ -126,265 +126,283 @@ import org.json.JSONObject;
 
     /**
      * @param flwref the flwref to set
+     *  @return PreAuthorization
      */
     public PreAuthorization setFlwref(String flwref) {
-<span class="fc" id="L131">        this.flwref = flwref;</span>
-<span class="fc" id="L132">        return this;</span>
+<span class="fc" id="L132">        this.flwref = flwref;</span>
+<span class="fc" id="L133">        return this;</span>
     }
 
     /**
      * @return the action
      */
     public String getAction() {
-<span class="fc" id="L139">        return action;</span>
+<span class="fc" id="L140">        return action;</span>
     }
 
     /**
      * @param action the action to set
+     * @return PreAuthorization
      */
     public PreAuthorization setAction(String action) {
-<span class="fc" id="L146">        this.action = action;</span>
-<span class="fc" id="L147">        return this;</span>
+<span class="fc" id="L148">        this.action = action;</span>
+<span class="fc" id="L149">        return this;</span>
     }
 
     /**
      * @return the cardno
      */
     public String getCardno() {
-<span class="fc" id="L154">        return cardno;</span>
+<span class="fc" id="L156">        return cardno;</span>
     }
 
     /**
      * @param cardno the cardno to set
+     * @return PreAuthorization
      */
     public PreAuthorization setCardno(String cardno) {
-<span class="fc" id="L161">        this.cardno = cardno;</span>
-<span class="fc" id="L162">        return this;</span>
+<span class="fc" id="L164">        this.cardno = cardno;</span>
+<span class="fc" id="L165">        return this;</span>
     }
 
     /**
      * @return the cvv
      */
     public String getCvv() {
-<span class="fc" id="L169">        return cvv;</span>
+<span class="fc" id="L172">        return cvv;</span>
     }
 
     /**
      * @param cvv the cvv to set
+     * @return PreAuthorization
      */
     public PreAuthorization setCvv(String cvv) {
-<span class="fc" id="L176">        this.cvv = cvv;</span>
-<span class="fc" id="L177">        return this;</span>
+<span class="fc" id="L180">        this.cvv = cvv;</span>
+<span class="fc" id="L181">        return this;</span>
     }
 
     /**
      * @return the expirymonth
      */
     public String getExpirymonth() {
-<span class="fc" id="L184">        return expirymonth;</span>
+<span class="fc" id="L188">        return expirymonth;</span>
     }
 
     /**
      * @param expirymonth the expirymonth to set
+     * @return PreAuthorization
      */
     public PreAuthorization setExpirymonth(String expirymonth) {
-<span class="fc" id="L191">        this.expirymonth = expirymonth;</span>
-<span class="fc" id="L192">        return this;</span>
+<span class="fc" id="L196">        this.expirymonth = expirymonth;</span>
+<span class="fc" id="L197">        return this;</span>
     }
 
     /**
      * @return the expiryyear
      */
     public String getExpiryyear() {
-<span class="fc" id="L199">        return expiryyear;</span>
+<span class="fc" id="L204">        return expiryyear;</span>
     }
 
     /**
      * @param expiryyear the expiryyear to set
+     * @return PreAuthorization
      */
     public PreAuthorization setExpiryyear(String expiryyear) {
-<span class="fc" id="L206">        this.expiryyear = expiryyear;</span>
-<span class="fc" id="L207">        return this;</span>
+<span class="fc" id="L212">        this.expiryyear = expiryyear;</span>
+<span class="fc" id="L213">        return this;</span>
     }
 
     /**
      * @return the currency
      */
     public String getCurrency() {
-<span class="fc" id="L214">        return currency;</span>
+<span class="fc" id="L220">        return currency;</span>
     }
 
     /**
      * @param currency the currency to set
+     * @return PreAuthorization
      */
     public PreAuthorization setCurrency(String currency) {
-<span class="fc" id="L221">        this.currency = currency;</span>
-<span class="fc" id="L222">        return this;</span>
+<span class="fc" id="L228">        this.currency = currency;</span>
+<span class="fc" id="L229">        return this;</span>
     }
 
     /**
      * @return the country
      */
     public String getCountry() {
-<span class="fc" id="L229">        return country;</span>
+<span class="fc" id="L236">        return country;</span>
     }
 
     /**
      * @param country the country to set
+     * @return PreAuthorization
      */
     public PreAuthorization setCountry(String country) {
-<span class="fc" id="L236">        this.country = country;</span>
-<span class="fc" id="L237">        return this;</span>
+<span class="fc" id="L244">        this.country = country;</span>
+<span class="fc" id="L245">        return this;</span>
     }
 
     /**
      * @return the amount
      */
     public String getAmount() {
-<span class="fc" id="L244">        return amount;</span>
+<span class="fc" id="L252">        return amount;</span>
     }
 
     /**
      * @param amount the amount to set
+     * @return PreAuthorization
      */
     public PreAuthorization setAmount(String amount) {
-<span class="fc" id="L251">        this.amount = amount;</span>
-<span class="fc" id="L252">        return this;</span>
+<span class="fc" id="L260">        this.amount = amount;</span>
+<span class="fc" id="L261">        return this;</span>
     }
 
     /**
      * @return the email
      */
     public String getEmail() {
-<span class="fc" id="L259">        return email;</span>
+<span class="fc" id="L268">        return email;</span>
     }
 
     /**
      * @param email the email to set
+     * @return PreAuthorization
      */
     public PreAuthorization setEmail(String email) {
-<span class="fc" id="L266">        this.email = email;</span>
-<span class="fc" id="L267">        return this;</span>
+<span class="fc" id="L276">        this.email = email;</span>
+<span class="fc" id="L277">        return this;</span>
     }
 
     /**
      * @return the phonenumber
      */
     public String getPhonenumber() {
-<span class="fc" id="L274">        return phonenumber;</span>
+<span class="fc" id="L284">        return phonenumber;</span>
     }
 
     /**
      * @param phonenumber the phonenumber to set
+     * @return PreAuthorization
      */
     public PreAuthorization setPhonenumber(String phonenumber) {
-<span class="fc" id="L281">        this.phonenumber = phonenumber;</span>
-<span class="fc" id="L282">        return this;</span>
+<span class="fc" id="L292">        this.phonenumber = phonenumber;</span>
+<span class="fc" id="L293">        return this;</span>
     }
 
     /**
      * @return the firstname
      */
     public String getFirstname() {
-<span class="fc" id="L289">        return firstname;</span>
+<span class="fc" id="L300">        return firstname;</span>
     }
 
     /**
      * @param firstname the firstname to set
+     * @return PreAuthorization
      */
     public PreAuthorization setFirstname(String firstname) {
-<span class="fc" id="L296">        this.firstname = firstname;</span>
-<span class="fc" id="L297">        return this;</span>
+<span class="fc" id="L308">        this.firstname = firstname;</span>
+<span class="fc" id="L309">        return this;</span>
     }
 
     /**
      * @return the lastname
      */
     public String getLastname() {
-<span class="fc" id="L304">        return lastname;</span>
+<span class="fc" id="L316">        return lastname;</span>
     }
 
     /**
      * @param lastname the lastname to set
+     * @return PreAuthorization
      */
     public PreAuthorization setLastname(String lastname) {
-<span class="fc" id="L311">        this.lastname = lastname;</span>
-<span class="fc" id="L312">        return this;</span>
+<span class="fc" id="L324">        this.lastname = lastname;</span>
+<span class="fc" id="L325">        return this;</span>
     }
 
     /**
      * @return the IP
      */
     public String getIP() {
-<span class="fc" id="L319">        return IP;</span>
+<span class="fc" id="L332">        return IP;</span>
     }
 
     /**
      * @param IP the IP to set
+     * @return PreAuthorization
      */
     public PreAuthorization setIP(String IP) {
-<span class="fc" id="L326">        this.IP = IP;</span>
-<span class="fc" id="L327">        return this;</span>
+<span class="fc" id="L340">        this.IP = IP;</span>
+<span class="fc" id="L341">        return this;</span>
     }
 
     /**
      * @return the txRef
      */
     public String getTxRef() {
-<span class="fc" id="L334">        return txRef;</span>
+<span class="fc" id="L348">        return txRef;</span>
     }
 
     /**
      * @param txRef the txRef to set
+     * @return PreAuthorization
      */
     public PreAuthorization setTxRef(String txRef) {
-<span class="fc" id="L341">        this.txRef = txRef;</span>
-<span class="fc" id="L342">        return this;</span>
+<span class="fc" id="L356">        this.txRef = txRef;</span>
+<span class="fc" id="L357">        return this;</span>
     }
 
     /**
      * @return the redirect_url
      */
     public String getRedirect_url() {
-<span class="fc" id="L349">        return redirect_url;</span>
+<span class="fc" id="L364">        return redirect_url;</span>
     }
 
     /**
      * @param redirect_url the redirect_url to set
+     * @return PreAuthorization
      */
     public PreAuthorization setRedirect_url(String redirect_url) {
-<span class="fc" id="L356">        this.redirect_url = redirect_url;</span>
-<span class="fc" id="L357">        return this;</span>
+<span class="fc" id="L372">        this.redirect_url = redirect_url;</span>
+<span class="fc" id="L373">        return this;</span>
     }
 
     /**
      * @return the device_fingerprint
      */
     public String getDevice_fingerprint() {
-<span class="fc" id="L364">        return device_fingerprint;</span>
+<span class="fc" id="L380">        return device_fingerprint;</span>
     }
 
     /**
      * @param device_fingerprint the device_fingerprint to set
+     * @return PreAuthorization
      */
     public PreAuthorization setDevice_fingerprint(String device_fingerprint) {
-<span class="fc" id="L371">        this.device_fingerprint = device_fingerprint;</span>
-<span class="fc" id="L372">        return this;</span>
+<span class="fc" id="L388">        this.device_fingerprint = device_fingerprint;</span>
+<span class="fc" id="L389">        return this;</span>
     }
 
     /**
      * @return the charge_type
      */
     public String getCharge_type() {
-<span class="fc" id="L379">        return charge_type;</span>
+<span class="fc" id="L396">        return charge_type;</span>
     }
 
     /**
      * @param charge_type the charge_type to set
+     * @return PreAuthorization
      */
     public PreAuthorization setCharge_type(String charge_type) {
-<span class="fc" id="L386">        this.charge_type = charge_type;</span>
-<span class="fc" id="L387">        return this;</span>
+<span class="fc" id="L404">        this.charge_type = charge_type;</span>
+<span class="fc" id="L405">        return this;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

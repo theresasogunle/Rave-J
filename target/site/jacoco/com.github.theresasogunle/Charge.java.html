@@ -22,7 +22,7 @@ import org.json.JSONObject;
     
 /**
  *
- * @param client
+ * @param client the client
  * @return JSONObject
  */
     
@@ -43,18 +43,25 @@ import org.json.JSONObject;
         
 <span class="fc" id="L44">        return this.apiConnection.connectAndQuery(api);</span>
     }
+    /**
+ *
+ * @param transaction_reference this is the transaction reference 
+ * @param otp this is the one time password
+ * @return JSONObject
+ */
+    
     public JSONObject validateCharge(String transaction_reference, String otp){
     
-<span class="fc" id="L48">       this.apiConnection = new ApiConnection(ed.getValidateChargeEndPoint());</span>
+<span class="fc" id="L55">       this.apiConnection = new ApiConnection(ed.getValidateChargeEndPoint());</span>
       
-<span class="fc" id="L50">        ApiQuery api=new ApiQuery();</span>
+<span class="fc" id="L57">        ApiQuery api=new ApiQuery();</span>
         
-<span class="fc" id="L52">        api.putParams(&quot;PBFPubKey&quot;,key.getPublicKey());</span>
-<span class="fc" id="L53">        api.putParams(&quot;transaction_reference&quot;, transaction_reference);</span>
+<span class="fc" id="L59">        api.putParams(&quot;PBFPubKey&quot;,key.getPublicKey());</span>
+<span class="fc" id="L60">        api.putParams(&quot;transaction_reference&quot;, transaction_reference);</span>
     
-<span class="fc" id="L55">        api.putParams(&quot;otp&quot;, otp);</span>
+<span class="fc" id="L62">        api.putParams(&quot;otp&quot;, otp);</span>
 
-<span class="fc" id="L57">        return this.apiConnection.connectAndQuery(api);</span>
+<span class="fc" id="L64">        return this.apiConnection.connectAndQuery(api);</span>
     }
      
    

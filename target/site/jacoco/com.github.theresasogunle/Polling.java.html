@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 <span class="fc" id="L16">public class Polling {</span>
           ApiConnection apiConnection;
-<span class="fc" id="L18">          private Endpoints ed=new Endpoints();</span>
+<span class="fc" id="L18">          private final Endpoints ed=new Endpoints();</span>
 <span class="fc" id="L19">          Encryption e=new Encryption();</span>
 <span class="fc" id="L20">          Keys key=new Keys();</span>
   
@@ -26,7 +26,7 @@ import org.json.JSONObject;
       
 <span class="fc" id="L27">        String message= json.toString();</span>
         
-<span class="fc" id="L29">        String encrypt_secret_key=e.getKey(key.getSecretKey());</span>
+<span class="fc" id="L29">        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());</span>
 <span class="fc" id="L30">        String client= encryptData(message,encrypt_secret_key);</span>
       
 <span class="fc" id="L32">        String alg=&quot;3DES-24&quot;;</span>

@@ -5,7 +5,7 @@
  */
 package com.github.theresasogunle;
 
-import java.io.FileNotFoundException;
+
 import org.json.JSONObject;
 
 /**
@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 public class Refund {
     private ApiConnection apiConnection;
-    private Keys key= new Keys();
+    private final Keys key= new Keys();
     Endpoints end= new Endpoints();
    private String ref;
 

@@ -5,7 +5,7 @@
  */
 package com.github.theresasogunle;
 
-import java.io.FileNotFoundException;
+
 import org.json.JSONObject;
 
 /**
@@ -21,8 +21,7 @@ public class ExchangeRates {
     private String destination_currency;
      /**
  *
- * @params
- * origin_currency,destination_currency , amount
+ *
  * @return JSONObject
  */
      
@@ -53,6 +52,7 @@ public class ExchangeRates {
 
     /**
      * @param amount the amount to set
+     * @return ExchangeRates
      */
     public ExchangeRates setAmount(String amount) {
         this.amount = amount;
@@ -68,6 +68,7 @@ public class ExchangeRates {
 
     /**
      * @param origin_currency the origin_currency to set
+     *  @return ExchangeRates
      */
     public ExchangeRates setOrigin_currency(String origin_currency) {
         this.origin_currency = origin_currency;
@@ -83,6 +84,7 @@ public class ExchangeRates {
 
     /**
      * @param destination_currency the destination_currency to set
+     *  @return ExchangeRates
      */
     public ExchangeRates setDestination_currency(String destination_currency) {
         this.destination_currency = destination_currency;

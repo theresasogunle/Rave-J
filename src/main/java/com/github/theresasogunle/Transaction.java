@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 public class Transaction {
     ApiConnection apiConnection;
-    private Keys key=new Keys();
+    private final Keys key=new Keys();
     Endpoints end= new Endpoints();
    private String  flwref, txRef;
     
@@ -56,6 +56,7 @@ public class Transaction {
 
     /**
      * @param flwref the flwref to set
+     * @return Transaction
      */
     public Transaction setFlwref(String flwref) {
         this.flwref = flwref;
@@ -71,6 +72,7 @@ public class Transaction {
 
     /**
      * @param txRef the txRef to set
+     * @return Transaction
      */
     public Transaction setTxRef(String txRef) {
         this.txRef = txRef;

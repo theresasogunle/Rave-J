@@ -5,8 +5,8 @@
  * and open the template in the editor.
  */
 package com.github.theresasogunle;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.security.NoSuchAlgorithmException;
@@ -19,13 +19,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.json.JSONException;
-import org.json.JSONObject;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 
 public class Encryption {
     private String key;
@@ -58,9 +57,7 @@ public class Encryption {
             System.arraycopy(subSeedKey.getBytes(), 0, combineArray, 0, 12);
             System.arraycopy(subHashString, subHashString.length - 12, combineArray, 12, 12);
             return new String(combineArray);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getGlobal().log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             Logger.getGlobal().log(Level.SEVERE, null, ex);
         }
         return null;
@@ -79,7 +76,7 @@ public class Encryption {
             final byte[] cipherText = cipher.doFinal(plainTextBytes);
             return Base64.getEncoder().encodeToString(cipherText);
 
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
 
                        return "";
         }

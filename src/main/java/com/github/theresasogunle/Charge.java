@@ -22,7 +22,7 @@ public class Charge {
     
 /**
  *
- * @param client
+ * @param client the client
  * @return JSONObject
  */
     
@@ -43,6 +43,13 @@ public class Charge {
         
         return this.apiConnection.connectAndQuery(api);
     }
+    /**
+ *
+ * @param transaction_reference this is the transaction reference 
+ * @param otp this is the one time password
+ * @return JSONObject
+ */
+    
     public JSONObject validateCharge(String transaction_reference, String otp){
     
        this.apiConnection = new ApiConnection(ed.getValidateChargeEndPoint());
