@@ -47,11 +47,9 @@ Rave-Java-Library facilitates quick and easy development and integration of Java
 
 `mvn install` to build 
 ### To use as library,add this to your pom.xml file
-<<<<<<< HEAD
+
 ```xml
-=======
-```
->>>>>>> 851731362c8959320261f1acbf914e8e393b4d1d
+
 <dependencies>
  <dependency>
   <groupId>com.github.theresasogunle</groupId>
@@ -61,7 +59,7 @@ Rave-Java-Library facilitates quick and easy development and integration of Java
 </dependency>
 </dependencies>
 ```
-<<<<<<< HEAD
+
 
 ### Gradle 
 ```java
@@ -196,8 +194,8 @@ The documentation for each classes and methods
 11. [IntegrityChecksum](Documentation/CHECKSUM.md)
 
 
-# Alternative Payment Methods
-## Nigerian USSD- GTB and Zenith Bank
+## Alternative Payment Methods
+### Nigerian USSD- GTB and Zenith Bank
 #### For Merchant
 - FOR GTB display ```*737*50*amount*159#```and return flwRef for the customer so as to complete the transaction
 #### For the developer
@@ -221,5 +219,3 @@ The documentation for each classes and methods
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-=======
->>>>>>> 851731362c8959320261f1acbf914e8e393b4d1d
