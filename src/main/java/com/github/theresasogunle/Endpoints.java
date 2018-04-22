@@ -6,12 +6,13 @@
 package com.github.theresasogunle;
 
 
+
 /**
  *
  * @author Theresa
  */
 public class Endpoints {
-       Keys key= new Keys();
+       RaveConstant key= new RaveConstant();
       String staging_url="http://flw-pms-dev.eu-west-1.elasticbeanstalk.com/";
       String live_url="https://api.ravepay.co/";
       String  url;
@@ -30,9 +31,12 @@ public class Endpoints {
       public static String CHARGE_TIMEOUT_ENDPOINT;
       public static String VALIDATE_CHARGE_TIMEOUT_ENDPOINT;
     
+      
+     
       void init(){
       
-          if(key.getEnvironment().equalsIgnoreCase("live")){
+
+          if(RaveConstant.ENVIRONMENT.toString().equalsIgnoreCase("live")){
            
             url=live_url;
           
@@ -55,7 +59,7 @@ public class Endpoints {
         REFUNDVOID_ENDPOINT=url+"flwv3-pug/getpaidx/api/refundorvoid";
         CHARGE_TIMEOUT_ENDPOINT=url+"flwv3-pug/getpaidx/api/charge?use_polling=1";
         VALIDATE_CHARGE_TIMEOUT_ENDPOINT=url+"flwv3-pug/getpaidx/api/validatecharge?use_polling=1";
-      
+       
       }
       
      public String getBankEndPoint(){
@@ -63,7 +67,7 @@ public class Endpoints {
          return BANK_ENDPOINT;
      
      }
-      
+     
      public String getChargeEndPoint(){
          init();
          return CARD_CHARGE_ENDPOINT;

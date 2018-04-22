@@ -6,6 +6,7 @@
 package com.github.theresasogunle;
 
 
+
 import static com.github.theresasogunle.Encryption.encryptData;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ public class AlternativePayment {
     ApiConnection apiConnection;
 
    Encryption e=new Encryption();
-   Keys key=new Keys();
+ 
    
    private String accountnumber,accountbank,currency,country,
            amount,firstname,lastname,
@@ -56,7 +57,7 @@ public class AlternativePayment {
            
            String message= json.toString();
         
-        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();
@@ -91,7 +92,7 @@ public class AlternativePayment {
            
       String message= json.toString();
         
-        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();
@@ -123,7 +124,7 @@ public class AlternativePayment {
        json.put("is_mpesa", "1");
          String message= json.toString();
         
-        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();

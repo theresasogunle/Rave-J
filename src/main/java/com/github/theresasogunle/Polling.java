@@ -15,25 +15,31 @@ import org.json.JSONObject;
  */
 public class Polling {
           ApiConnection apiConnection;
-          private final Endpoints ed=new Endpoints();
+      final private Endpoints ed=new Endpoints();
           Encryption e=new Encryption();
-          Keys key=new Keys();
+          RaveConstant key=new RaveConstant();
   
   
     //if timeout, start polling
+     /**
+     * 
+     *@param json
+     * @throws JSONException
+     * @return JSONObject
+     */
     public JSONObject handleTimeoutCharge(JSONObject json)throws JSONException{
       this.apiConnection = new ApiConnection(ed.getChargeTimeoutEndpoint());
       
         String message= json.toString();
         
-        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey( RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
       
         String alg="3DES-24";
      
         ApiQuery api=new ApiQuery();
         
-        api.putParams("PBFPubKey", key.getPublicKey());
+        api.putParams("PBFPubKey", RaveConstant.PUBLIC_KEY);
 
         api.putParams("client", client);
 
@@ -42,16 +48,18 @@ public class Polling {
         
         return this.apiConnection.connectAndQuery(api);
     }
+     /**
+     * 
+     * @param transaction_reference
+     * @param otp 
+     * @return String
+     */
     public JSONObject validateChargeTimeout(String transaction_reference,String otp){
-        this.apiConnection = new ApiConnection(ed.getValidateChargeTimeoutEndpoint());
+       
 
-        ApiQuery api=new ApiQuery();
+       Charge vc= new Charge();
 
-        api.putParams("PBFPubKey",key.getPublicKey());
-        api.putParams("transaction_reference",transaction_reference);
-        api.putParams("otp",  otp);
-
-        return this.apiConnection.connectAndQuery(api);
+        return vc.validateCharge(transaction_reference, otp);
     }
     
 

@@ -18,23 +18,25 @@ public class Charge {
     
     ApiConnection apiConnection;
     Endpoints ed= new Endpoints();
-    Keys key= new Keys();
-    
+ 
+   
 /**
  *
- * @param client the client
+ * @param client
  * @return JSONObject
  */
+    
     
     //for all charges
     public JSONObject charge(String client){
         this.apiConnection = new ApiConnection(ed.getChargeEndPoint());
           
        String alg="3DES-24";
+      
      
         ApiQuery api=new ApiQuery();
         
-        api.putParams("PBFPubKey", key.getPublicKey());
+        api.putParams("PBFPubKey", RaveConstant.PUBLIC_KEY);
 
         api.putParams("client", client);
 
@@ -43,12 +45,14 @@ public class Charge {
         
         return this.apiConnection.connectAndQuery(api);
     }
-    /**
- *
- * @param transaction_reference this is the transaction reference 
- * @param otp this is the one time password
- * @return JSONObject
- */
+     /**
+    *
+    * 
+    * @return JSONObject
+    * @param  transaction_reference
+    * @param otp
+    * 
+    */
     
     public JSONObject validateCharge(String transaction_reference, String otp){
     
@@ -56,14 +60,15 @@ public class Charge {
       
         ApiQuery api=new ApiQuery();
         
-        api.putParams("PBFPubKey",key.getPublicKey());
+        api.putParams("PBFPubKey",RaveConstant.PUBLIC_KEY);
         api.putParams("transaction_reference", transaction_reference);
     
         api.putParams("otp", otp);
 
         return this.apiConnection.connectAndQuery(api);
     }
-     
+
+   
    
     
    

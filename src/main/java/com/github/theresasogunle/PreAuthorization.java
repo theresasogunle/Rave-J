@@ -22,10 +22,10 @@ public class PreAuthorization {
    Encryption e=new Encryption();
     private String flwref;
     private String action;
-  Keys key=new Keys();
-  private String cardno,cvv,expirymonth,expiryyear,currency,country,
-      amount,email,phonenumber,firstname,lastname,IP,txRef,redirect_url,device_fingerprint,
-            charge_type;
+  RaveConstant key=new RaveConstant();
+  private String cardno,cvv,expirymonth,expiryyear,currency,country;
+  private String  amount,email,phonenumber,firstname,lastname,IP;
+  private String txRef,redirect_url,device_fingerprint,charge_type;
   /*
   NB: For Preauth payment please use the keys below:
 | Public Key | FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X |
@@ -34,6 +34,10 @@ public class PreAuthorization {
     Preauth payments is based on approval per merchant,
   and is not open to accounts except approval to use these payment method is given.
   */
+  /**
+     * @return JSONObject
+     * @throws JSONException
+     */
   public JSONObject setJSON()throws JSONException{
       JSONObject json= new JSONObject();
        String public_key="FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X ";
@@ -58,6 +62,10 @@ public class PreAuthorization {
         return json;
   
   }
+   /**
+     * @return JSONObject
+     * @throws JSONException
+     */
    public JSONObject preAuthorizeCard()throws JSONException{
        
       this.apiConnection = new ApiConnection(end.getChargeEndPoint());
@@ -89,7 +97,9 @@ public class PreAuthorization {
        
           return this.apiConnection.connectAndQuery(api);
    }
-   
+    /**
+     * @return the JSONObject
+     */
    public JSONObject capture(){
       this.apiConnection = new ApiConnection(end.getCaptureEndPoint());
       ApiQuery api= new ApiQuery();
@@ -103,19 +113,22 @@ public class PreAuthorization {
     
       return this.apiConnection.connectAndQuery(api);
    }
+    /**
+     * @return JSONObject
+     */
    
-   public JSONObject refundOrVoid(){
-   this.apiConnection = new ApiConnection(end.getRefundOrVoidEndPoint());
-    ApiQuery api= new ApiQuery();
-     String secret_key="FLWSECK-c51891678d48c39eff3701ff686bdb69-X";
-     // String secret_key=key.getSecretKey();
-      api.putParams("ref", this.getFlwref());
-      api.putParams("action", this.getAction());
-      api.putParams("SECKEY", secret_key);
-    
-      return this.apiConnection.connectAndQuery(api);
-   
-   }
+        public JSONObject refundOrVoid(){
+        this.apiConnection = new ApiConnection(end.getRefundOrVoidEndPoint());
+        ApiQuery api= new ApiQuery();
+        String secret_key="FLWSECK-c51891678d48c39eff3701ff686bdb69-X";
+          // String secret_key=key.getSecretKey();
+        api.putParams("ref", this.getFlwref());
+        api.putParams("action", this.getAction());
+        api.putParams("SECKEY", secret_key);
+
+        return this.apiConnection.connectAndQuery(api);
+
+        }
 
     /**
      * @return the flwref
@@ -126,7 +139,7 @@ public class PreAuthorization {
 
     /**
      * @param flwref the flwref to set
-     *  @return PreAuthorization
+     * @return PreAuthorization
      */
     public PreAuthorization setFlwref(String flwref) {
         this.flwref = flwref;

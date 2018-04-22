@@ -27,7 +27,6 @@ public class ApiConnection {
 
     final private String url;
   
-
     /**
      * @param url - Flutterwave API url
      */
@@ -51,7 +50,7 @@ public class ApiConnection {
             Unirest.setHttpClient(httpClient);
 
         } catch (NoSuchAlgorithmException | KeyManagementException ex) {
-         
+            Logger.getLogger(ApiConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -68,7 +67,9 @@ public class ApiConnection {
                     .header("Accept", "application/json")
                     .fields(query.getParams())
                     .asJson();
-  
+            
+           
+            
             try{
             return queryForResponse.getBody().getObject();
             }catch(Exception ex){}
@@ -86,7 +87,8 @@ public class ApiConnection {
         try {
             HttpResponse<JsonNode> queryForResponse = Unirest.post(url)
                     .header("Accept", "application/json")
-                  
+                    
+                    .fields(query)
                     .asJson();
             return queryForResponse.getBody().getObject();
         } catch (UnirestException e) {

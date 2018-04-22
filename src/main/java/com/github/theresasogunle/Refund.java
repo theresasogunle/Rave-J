@@ -14,16 +14,19 @@ import org.json.JSONObject;
  */
 public class Refund {
     private ApiConnection apiConnection;
-    private final Keys key= new Keys();
+    final  private RaveConstant key= new RaveConstant();
     Endpoints end= new Endpoints();
    private String ref;
-
+    /**
+     * @return JSONObject
+     *
+     */
     public JSONObject refund(){
         this.apiConnection = new ApiConnection(end.getRefundEndPoint());
         ApiQuery api= new ApiQuery();
 
         api.putParams("ref", this.getRef());
-        api.putParams("seckey", key.getSecretKey());
+        api.putParams("seckey",  RaveConstant.SECRET_KEY);
 
 
         return this.apiConnection.connectAndQuery(api);

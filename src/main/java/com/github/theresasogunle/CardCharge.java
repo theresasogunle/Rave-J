@@ -6,6 +6,7 @@
 package com.github.theresasogunle;
 
 
+
 import static com.github.theresasogunle.Encryption.encryptData;
 import static com.github.theresasogunle.Encryption.getKey;
 import java.awt.Desktop;
@@ -24,7 +25,7 @@ public class CardCharge {
     JSONObject api=new JSONObject();
     Endpoints ed=new Endpoints();
     ApiConnection apiConnection;
-    Keys key=new Keys();
+  
     Encryption e=new Encryption();
     private String cardno,cvv,expirymonth,expiryyear,currency,country,pin,suggested_auth,
       amount,email,phonenumber,firstname,lastname,txRef,redirect_url,device_fingerprint,IP,
@@ -66,14 +67,14 @@ public class CardCharge {
     public JSONObject chargeMasterAndVerveCard() throws JSONException{
         JSONObject json= setJSON();
         
-        json.put("PBFPubKey",key.getPublicKey());
+        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
         json.put("pin",this.getPin() );
         json.put("suggested_auth",this.getSuggested_auth() );
 
         
        String message= json.toString();
 
-        String encrypt_secret_key=getKey(key.getSecretKey());
+        String encrypt_secret_key=getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();
@@ -84,7 +85,7 @@ public class CardCharge {
     public JSONObject chargeMasterAndVerveCard(boolean polling) throws JSONException{
         JSONObject json= setJSON();
         
-        json.put("PBFPubKey",key.getPublicKey());
+        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
         json.put("pin",this.getPin() );
         json.put("suggested_auth",this.getSuggested_auth() );
         Polling p=new Polling();
@@ -94,12 +95,12 @@ public class CardCharge {
     }
     public JSONObject chargeVisaAndIntl() throws JSONException{
         JSONObject json= setJSON();
-        json.put("PBFPubKey",key.getPublicKey());
+        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
         json.put("redirect_url", this.getRedirect_url() );
 
         String message= json.toString();
 
-        String encrypt_secret_key=getKey(key.getSecretKey());
+        String encrypt_secret_key=getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();
@@ -107,9 +108,10 @@ public class CardCharge {
         return ch.charge(client); 
     
     }
+    
       public JSONObject chargeVisaAndIntl(boolean polling) throws JSONException{
         JSONObject json= setJSON();
-        json.put("PBFPubKey",key.getPublicKey());
+        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
         json.put("redirect_url", this.getRedirect_url() );
         Polling p=new Polling();
 

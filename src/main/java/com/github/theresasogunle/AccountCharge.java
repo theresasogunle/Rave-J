@@ -6,8 +6,9 @@
 package com.github.theresasogunle;
 
 
-import static com.github.theresasogunle.Encryption.encryptData;
 
+
+import static com.github.theresasogunle.Encryption.encryptData;
 import org.json.JSONException;
 
 import org.json.JSONObject;
@@ -20,10 +21,7 @@ import org.json.JSONObject;
  * @author Theresa
  */
 public class AccountCharge {
-    
-   
-   final private Keys key = new Keys();
-  
+ 
     Encryption e=new Encryption();
     
     private String accountnumber,accountbank,currency,country,
@@ -33,13 +31,10 @@ public class AccountCharge {
     private String transaction_reference;//to be called
     private String otp;//to be called
  
-   
-    
-   
     public JSONObject setJSON() throws JSONException{
         JSONObject json=new JSONObject();
         
-        json.put("PBFPubKey",key.getPublicKey());
+        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
         json.put("accountnumber",this.getAccountnumber());//expected result'
         json.put("accountbank",this.getAccountbank());
         json.put("currency", this.getCurrency());
@@ -72,7 +67,7 @@ public class AccountCharge {
         
         String message= json.toString();
         
-        String encrypt_secret_key=Encryption.getKey(key.getSecretKey());
+        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);
         String client= encryptData(message,encrypt_secret_key);
 
         Charge ch=new Charge();

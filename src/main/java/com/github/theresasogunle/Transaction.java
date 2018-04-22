@@ -14,24 +14,30 @@ import org.json.JSONObject;
  */
 public class Transaction {
     ApiConnection apiConnection;
-    private final Keys key=new Keys();
+   
     Endpoints end= new Endpoints();
    private String  flwref, txRef;
     
     //requery all failed transactions
-
+/**
+     * @return JSONObject
+     * 
+     */
     public JSONObject verifyTransactionRequery(){   
 
       this.apiConnection = new ApiConnection(end.getVerifyEndPoint());
       ApiQuery api= new ApiQuery();
       api.putParams("txref", this.getTxRef());
       api.putParams("flw_ref", this.getFlwref());
-      api.putParams("SECKEY",key.getSecretKey() );
+      api.putParams("SECKEY", RaveConstant.SECRET_KEY );
     
       return this.apiConnection.connectAndQuery(api);
     }
     
-
+/**
+     * @return JSONObject
+     * 
+     */
     public JSONObject verifyTransactionXrequery(){   
      
       this.apiConnection = new ApiConnection(end.getVerifyXrequeryEndPoint());
@@ -40,7 +46,7 @@ public class Transaction {
       
       api.putParams("txref", this.getTxRef());
       api.putParams("txref", this.getTxRef());
-      api.putParams("SECKEY", key.getSecretKey());
+      api.putParams("SECKEY",  RaveConstant.SECRET_KEY);
       api.putParams("last_attempt", 1);
       api.putParams("only_successful", 1);
 

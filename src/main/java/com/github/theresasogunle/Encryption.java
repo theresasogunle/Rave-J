@@ -1,21 +1,15 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.github.theresasogunle;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.security.NoSuchAlgorithmException;
-
-
-/**
- *
- * @author Theresa
- */
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,13 +19,18 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.json.JSONObject;
+/**
+ *
+ * @author Theresa
+ */
+
 
 public class Encryption {
-    private String key;
-    private ApiConnection apiConnection;
-    Keys keys= new Keys();
-    String cardno,currency,country,cvv,amount,expiryyear, expirymonth,suggested_auth, pin, email,  IP,txRef,device_fingerprint,redirectUrl;
-      
+   
+   
+    RaveConstant keys= new RaveConstant();
+   
         
     // Method to turn bytes in hex
     public static String toHexStr(byte[] bytes){
@@ -78,12 +77,43 @@ public class Encryption {
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
 
-                       return "";
+          
+            return "";
         }
         
     }
 
-/*
+    /**
+    *
+    * @param api(JSON object)
+    * @return String
+    */
+    
+    public String encryptParameters(JSONObject api) {
+           
+        try{
+            api.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
+        }catch(Exception ex){}
+        
+      
+        
+        String message= api.toString();
+        
+        String encrypt_secret_key=getKey(RaveConstant.SECRET_KEY);
+        String encrypted_message= encryptData(message,encrypt_secret_key);
+
+
+        return encrypted_message;
+
+    }
+ /**
+    *
+    * 
+    * @return String
+    * @param api 
+    * 
+    */
+    
 
     public String encryptParametersPreAuth(JSONObject api){
            
@@ -103,6 +133,6 @@ public class Encryption {
 
     }
         
-      */ 
+       
     
 }

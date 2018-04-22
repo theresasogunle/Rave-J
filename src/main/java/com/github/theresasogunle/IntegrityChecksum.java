@@ -18,15 +18,22 @@ import java.util.HashMap;
  */
 public class IntegrityChecksum {
       
-        Keys key=new Keys();
-    private String amount, payment_method,custom_description,custom_logo,country,currency,
-           customer_email, customer_lastname,customer_firstname,customer_phone,txref;
+        RaveConstant key=new RaveConstant();
+    private String amount, payment_method,custom_description;
+    private String custom_logo,country,currency,customer_email; 
+    private String customer_lastname,customer_firstname,customer_phone,txref;
+     /**
+    *
+    * 
+    * @return String
+    *
+    */
     
     
     public String integrityChecksum(){
          HashMap payload=new HashMap();
          
-        payload.put("PBFPubKey" ,key.getPublicKey());
+        payload.put("PBFPubKey" , RaveConstant.PUBLIC_KEY);
         payload.put("amount" ,this.getAmount());
         payload.put("payment_method", this.getPayment_method());
         payload.put("custom_description",this.getCustom_description());
@@ -39,18 +46,17 @@ public class IntegrityChecksum {
         payload.put("customer_phone", this.getCustomer_phone());
         payload.put( "txref",this.getTxref());
 
-        payload.put("PBFPubKey", key.getPublicKey());
-    
+     
      
        Object[] keys=payload.keySet().toArray();
        Arrays.sort(keys);
        String hashedPayload = "";
-       
 
-            for (Object keyy : keys) {
-                hashedPayload+=payload.get(keyy);
+
+            for (Object key : keys) {
+                hashedPayload+=payload.get(key);
             }
-              String  hashString  = hashedPayload + key.getSecretKey();
+              String  hashString  = hashedPayload +  RaveConstant.SECRET_KEY;
                 String hash_string="";
 
                 try{
@@ -72,7 +78,7 @@ public class IntegrityChecksum {
 
     /**
      * @param amount the amount to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setAmount(String amount) {
         this.amount = amount;
@@ -88,7 +94,7 @@ public class IntegrityChecksum {
 
     /**
      * @param payment_method the payment_method to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setPayment_method(String payment_method) {
         this.payment_method = payment_method;
@@ -104,7 +110,7 @@ public class IntegrityChecksum {
 
     /**
      * @param custom_description the custom_description to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustom_description(String custom_description) {
         this.custom_description = custom_description;
@@ -113,6 +119,7 @@ public class IntegrityChecksum {
 
     /**
      * @return the custom_logo
+     * 
      */
     public String getCustom_logo() {
         return custom_logo;
@@ -120,7 +127,7 @@ public class IntegrityChecksum {
 
     /**
      * @param custom_logo the custom_logo to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustom_logo(String custom_logo) {
         this.custom_logo = custom_logo;
@@ -136,7 +143,7 @@ public class IntegrityChecksum {
 
     /**
      * @param country the country to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCountry(String country) {
         this.country = country;
@@ -152,7 +159,7 @@ public class IntegrityChecksum {
 
     /**
      * @param currency the currency to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCurrency(String currency) {
         this.currency = currency;
@@ -168,7 +175,7 @@ public class IntegrityChecksum {
 
     /**
      * @param customer_email the customer_email to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustomer_email(String customer_email) {
         this.customer_email = customer_email;
@@ -184,7 +191,7 @@ public class IntegrityChecksum {
 
     /**
      * @param customer_lastname the customer_lastname to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustomer_lastname(String customer_lastname) {
         this.customer_lastname = customer_lastname;
@@ -200,7 +207,7 @@ public class IntegrityChecksum {
 
     /**
      * @param customer_firstname the customer_firstname to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustomer_firstname(String customer_firstname) {
         this.customer_firstname = customer_firstname;
@@ -216,7 +223,7 @@ public class IntegrityChecksum {
 
     /**
      * @param customer_phone the customer_phone to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setCustomer_phone(String customer_phone) {
         this.customer_phone = customer_phone;
@@ -232,7 +239,7 @@ public class IntegrityChecksum {
 
     /**
      * @param txref the txref to set
-     *  @return IntegrityChecksum
+     * @return IntegrityChecksum
      */
     public IntegrityChecksum setTxref(String txref) {
         this.txref = txref;
