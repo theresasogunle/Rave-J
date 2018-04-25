@@ -7,6 +7,8 @@ package com.github.theresasogunle;
 
 
 import static com.github.theresasogunle.Encryption.encryptData;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,8 +40,11 @@ public class PreAuthorization {
      * @return JSONObject
      * @throws JSONException
      */
-  public JSONObject setJSON()throws JSONException{
+  public JSONObject setJSON(){
       JSONObject json= new JSONObject();
+      try{
+           InetAddress inetAddress = InetAddress.getLocalHost();
+             IP= inetAddress.getHostAddress();
        String public_key="FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X ";
         json.put("PBFPubKey",public_key);
         json.put("cardno", this.getCardno());
@@ -54,11 +59,11 @@ public class PreAuthorization {
         json.put("phonenumber", this.getPhonenumber());
         json.put("firstname", this.getFirstname());
         json.put("lastname", this.getLastname());
-        json.put("IP", this.getIP());
+        json.put("IP", IP);
         json.put("txRef", this.getTxRef());
         json.put("redirect_url", this.getRedirect_url());
         json.put("device_fingerprint", this.getDevice_fingerprint());
-        
+      }catch(UnknownHostException | JSONException ex){ex.getMessage();}
         return json;
   
   }

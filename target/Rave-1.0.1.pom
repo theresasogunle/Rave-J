@@ -3,9 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.theresasogunle</groupId>
     <artifactId>Rave</artifactId>
-    <version>1.0</version>
-   
-    
+    <version>1.0.1</version>
+    <packaging>jar</packaging>
     <name>Rave</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,27 +17,17 @@
 	<url>https://github.com/theresasogunle/Rave-Java</url>
 </organization>
 
-<parent>
-  <groupId>org.apache</groupId>
-  <artifactId>apache</artifactId>
-  <version>10</version>
-</parent>
+<distributionManagement>
+                <repository>
+                <id>bintray-theresasogunle-Rave</id>
+                <name>theresasogunle-Rave</name>
+                <url>https://api.bintray.com/maven/theresasogunle/Rave/Rave/;publish=1</url>
+                </repository>
+</distributionManagement>
+
     <build>
         
     <plugins>
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-<phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
         <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-compiler-plugin</artifactId>
@@ -77,9 +66,123 @@
               </goals>
           </execution>
       </executions>
- 
+  </plugin>
+  
+  <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <executions>
+          <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                  <goal>sign</goal>
+              </goals>
+          </execution>
+      </executions>
+  </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-release-plugin</artifactId>
+			<version>2.4.2</version>
+		</plugin>
+        <!-- https://mvnrepository.com/artifact/org.sonarsource.java/sonar-java-plugin -->
+        <plugin>
+            <groupId>org.sonarsource.java</groupId>
+            <artifactId>sonar-java-plugin</artifactId>
+            <version>4.4.0.8066</version>
+            
         </plugin>
-   
+         <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>2.3.2</version>
+      <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+      </configuration>
+  </plugin>
+  <plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <version>2.3</version>
+      <configuration>
+          <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+      </configuration>
+      <executions>
+          <execution>
+              <phase>package</phase>
+              <goals>
+                  <goal>single</goal>
+              </goals>
+          </execution>
+      </executions>
+  </plugin>
+  <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>2.1.2</version>
+      <executions>
+          <execution>
+              <id>attach-sources</id>
+              <goals>
+                  <goal>jar</goal>
+              </goals>
+          </execution>
+      </executions>
+  </plugin>
+  
+  
+        <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.7.4.201502262128</version>
+    <executions>
+        <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+           
+        </execution>
+        <execution>
+            <id>jacoco-report</id>
+           
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+     <plugin>
+    <groupId>org.eluder.coveralls</groupId>
+    <artifactId>coveralls-maven-plugin</artifactId>
+    <version>4.3.0</version>
+    <configuration>
+        <repoToken>dakvAtKl39YvqHlqpvkHQb26M7CZMEsNg</repoToken>
+    </configuration>
+</plugin>
+<plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <configuration>
+          <quiet>true</quiet>
+          <nonavbar>true</nonavbar>
+          <notree>true</notree>
+          <nocomment>true</nocomment>
+          <nohelp>true</nohelp>
+
+      </configuration>
+      <executions>
+          <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                  <goal>jar</goal>
+              </goals>
+          </execution>
+      </executions>
+  </plugin>
     </plugins>
        
       
@@ -87,6 +190,13 @@
 <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
   <dependencies>
       <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+<dependency>
+   <groupId>com.sun</groupId>
+   <artifactId>tools</artifactId>
+   <version>1.8</version>
+   <scope>system</scope>
+   <systemPath>C:\Program Files\Java\jdk1.8.0_11\lib\tools.jar</systemPath>
+ </dependency>
 <dependency>
     <groupId>commons-logging</groupId>
     <artifactId>commons-logging</artifactId>
