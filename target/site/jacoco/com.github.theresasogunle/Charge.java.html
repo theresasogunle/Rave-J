@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Charge.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Rave</a> &gt; <a href="index.source.html" class="el_package">com.github.theresasogunle</a> &gt; <span class="el_source">Charge.java</span></div><h1>Charge.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.theresasogunle;
+
+
+import org.json.JSONObject;
+
+
+
+/**
+ *
+ * @author Theresa
+ */
+<span class="fc" id="L17">public class Charge {</span>
+    
+    ApiConnection apiConnection;
+<span class="fc" id="L20">    Endpoints ed= new Endpoints();</span>
+ 
+   
+/**
+ *
+ * @param client
+ * @return JSONObject
+ */
+    
+    
+    //for all charges
+    public JSONObject charge(String client){
+<span class="fc" id="L32">        this.apiConnection = new ApiConnection(ed.getChargeEndPoint());</span>
+          
+<span class="fc" id="L34">       String alg=&quot;3DES-24&quot;;</span>
+      
+     
+<span class="fc" id="L37">        ApiQuery api=new ApiQuery();</span>
+        
+<span class="fc" id="L39">        api.putParams(&quot;PBFPubKey&quot;, RaveConstant.PUBLIC_KEY);</span>
+
+<span class="fc" id="L41">        api.putParams(&quot;client&quot;, client);</span>
+
+<span class="fc" id="L43">        api.putParams(&quot;alg&quot;, alg);</span>
+      
+        
+<span class="fc" id="L46">        return this.apiConnection.connectAndQuery(api);</span>
+    }
+     /**
+    *
+    * 
+    * @return JSONObject
+    * @param  transaction_reference
+    * @param otp
+    * 
+    */
+    
+    public JSONObject validateAccountCharge(String transaction_reference, String otp){
+    
+<span class="fc" id="L59">       this.apiConnection = new ApiConnection(ed.getValidateAccountChargeEndPoint());</span>
+      
+<span class="fc" id="L61">        ApiQuery api=new ApiQuery();</span>
+        
+<span class="fc" id="L63">        api.putParams(&quot;PBFPubKey&quot;,RaveConstant.PUBLIC_KEY);</span>
+<span class="fc" id="L64">        api.putParams(&quot;transactionreference&quot;, transaction_reference);</span>
+    
+<span class="fc" id="L66">        api.putParams(&quot;otp&quot;, otp);</span>
+
+<span class="fc" id="L68">        return this.apiConnection.connectAndQuery(api);</span>
+    }
+  /**
+    *
+    * 
+    * @return JSONObject
+    * @param  transaction_reference
+    * @param otp
+    * 
+    */
+    
+    public JSONObject validateCardCharge(String transaction_reference, String otp){
+    
+<span class="fc" id="L81">       this.apiConnection = new ApiConnection(ed.getValidateCardChargeEndPoint());</span>
+      
+<span class="fc" id="L83">        ApiQuery api=new ApiQuery();</span>
+        
+<span class="fc" id="L85">        api.putParams(&quot;PBFPubKey&quot;,RaveConstant.PUBLIC_KEY);</span>
+<span class="fc" id="L86">        api.putParams(&quot;transaction_reference&quot;, transaction_reference);</span>
+    
+<span class="fc" id="L88">        api.putParams(&quot;otp&quot;, otp);</span>
+
+<span class="fc" id="L90">        return this.apiConnection.connectAndQuery(api);</span>
+    }
+
+   
+   
+    
+   
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

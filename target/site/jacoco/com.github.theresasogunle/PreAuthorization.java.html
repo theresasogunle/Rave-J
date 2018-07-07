@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PreAuthorization.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Rave</a> &gt; <a href="index.source.html" class="el_package">com.github.theresasogunle</a> &gt; <span class="el_source">PreAuthorization.java</span></div><h1>PreAuthorization.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.theresasogunle;
+
+
+import static com.github.theresasogunle.Encryption.encryptData;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+
+/**
+ *
+ * @author Theresa
+ */
+<span class="fc" id="L21">public class PreAuthorization {</span>
+   ApiConnection apiConnection;
+<span class="fc" id="L23">   Endpoints end=new Endpoints();</span>
+<span class="fc" id="L24">   Encryption e=new Encryption();</span>
+    private String flwref;
+    private String action;
+<span class="fc" id="L27">  RaveConstant key=new RaveConstant();</span>
+  private String cardno,cvv,expirymonth,expiryyear,currency,country;
+  private String  amount,email,phonenumber,firstname,lastname,IP;
+  private String txRef,redirect_url,device_fingerprint,charge_type;
+  /*
+  NB: For Preauth payment please use the keys below:
+| Public Key | FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X |
+| Secret Key | FLWSECK-c51891678d48c39eff3701ff686bdb69-X |
+
+    Preauth payments is based on approval per merchant,
+  and is not open to accounts except approval to use these payment method is given.
+  */
+  /**
+     * @return JSONObject
+     * @throws JSONException
+     */
+  public JSONObject setJSON(){
+<span class="fc" id="L44">      JSONObject json= new JSONObject();</span>
+      try{
+<span class="fc" id="L46">           InetAddress inetAddress = InetAddress.getLocalHost();</span>
+<span class="fc" id="L47">             IP= inetAddress.getHostAddress();</span>
+<span class="fc" id="L48">       String public_key=&quot;FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X &quot;;</span>
+<span class="fc" id="L49">        json.put(&quot;PBFPubKey&quot;,public_key);</span>
+<span class="fc" id="L50">        json.put(&quot;cardno&quot;, this.getCardno());</span>
+<span class="fc" id="L51">        json.put(&quot;charge_type&quot;,this.getCharge_type());</span>
+<span class="fc" id="L52">        json.put(&quot;cvv&quot;, this.getCvv());</span>
+<span class="fc" id="L53">        json.put(&quot;expirymonth&quot;, this.getExpirymonth());</span>
+<span class="fc" id="L54">        json.put(&quot;expiryyear&quot;,this.getExpiryyear());</span>
+<span class="fc" id="L55">        json.put( &quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L56">        json.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L57">        json.put(&quot;amount&quot;,this.getAmount());</span>
+<span class="fc" id="L58">        json.put(&quot;email&quot;, this.getEmail());</span>
+<span class="fc" id="L59">        json.put(&quot;phonenumber&quot;, this.getPhonenumber());</span>
+<span class="fc" id="L60">        json.put(&quot;firstname&quot;, this.getFirstname());</span>
+<span class="fc" id="L61">        json.put(&quot;lastname&quot;, this.getLastname());</span>
+<span class="fc" id="L62">        json.put(&quot;IP&quot;, IP);</span>
+<span class="fc" id="L63">        json.put(&quot;txRef&quot;, this.getTxRef());</span>
+<span class="fc" id="L64">        json.put(&quot;redirect_url&quot;, this.getRedirect_url());</span>
+<span class="fc" id="L65">        json.put(&quot;device_fingerprint&quot;, this.getDevice_fingerprint());</span>
+<span class="pc" id="L66">      }catch(UnknownHostException | JSONException ex){ex.getMessage();}</span>
+<span class="fc" id="L67">        return json;</span>
+  
+  }
+   /**
+     * @return JSONObject
+     * @throws JSONException
+     */
+   public JSONObject preAuthorizeCard()throws JSONException{
+       
+<span class="fc" id="L76">      this.apiConnection = new ApiConnection(end.getChargeEndPoint());</span>
+<span class="fc" id="L77">         JSONObject json= setJSON();</span>
+<span class="fc" id="L78">         String public_key=&quot;FLWPUBK-8cd258c49f38e05292e5472b2b15906e-X &quot;;</span>
+      //preauthorization requires special public key
+     
+      
+      //else us the normal public key
+     //  String public_key=key.getPublicKey();
+       
+      
+      //preauthorization requires special public key
+      
+<span class="fc" id="L88">         String message= json.toString();</span>
+<span class="fc" id="L89">         String secret_key=&quot;FLWSECK-c51891678d48c39eff3701ff686bdb69-X&quot;;</span>
+         
+<span class="fc" id="L91">        String encrypt_secret_key=Encryption.getKey(secret_key);</span>
+<span class="fc" id="L92">        String client= encryptData(message,encrypt_secret_key);</span>
+<span class="fc" id="L93">       String alg=&quot;3DES-24&quot;;</span>
+       
+<span class="fc" id="L95">       ApiQuery api=new ApiQuery();</span>
+         
+<span class="fc" id="L97">        api.putParams(&quot;PBFPubKey&quot;, public_key);</span>
+<span class="fc" id="L98">        api.putParams(&quot;client&quot;, client);</span>
+<span class="fc" id="L99">        api.putParams(&quot;alg&quot;, alg);</span>
+<span class="fc" id="L100">        System.out.println(&quot;Succesful&quot;);</span>
+       
+       
+<span class="fc" id="L103">          return this.apiConnection.connectAndQuery(api);</span>
+   }
+    /**
+     * @return the JSONObject
+     */
+   public JSONObject capture(){
+<span class="fc" id="L109">      this.apiConnection = new ApiConnection(end.getCaptureEndPoint());</span>
+<span class="fc" id="L110">      ApiQuery api= new ApiQuery();</span>
+    
+<span class="fc" id="L112">      String secret_key=&quot;FLWSECK-c51891678d48c39eff3701ff686bdb69-X&quot;;</span>
+
+     // String secret_key=key.getSecretKey();
+<span class="fc" id="L115">      api.putParams(&quot;flwRef&quot;, this.getFlwref());</span>
+<span class="fc" id="L116">      api.putParams(&quot;SECKEY&quot;, secret_key);</span>
+      
+    
+<span class="fc" id="L119">      return this.apiConnection.connectAndQuery(api);</span>
+   }
+    /**
+     * @return JSONObject
+     */
+   
+        public JSONObject refundOrVoid(){
+<span class="fc" id="L126">        this.apiConnection = new ApiConnection(end.getRefundOrVoidEndPoint());</span>
+<span class="fc" id="L127">        ApiQuery api= new ApiQuery();</span>
+<span class="fc" id="L128">        String secret_key=&quot;FLWSECK-c51891678d48c39eff3701ff686bdb69-X&quot;;</span>
+          // String secret_key=key.getSecretKey();
+<span class="fc" id="L130">        api.putParams(&quot;ref&quot;, this.getFlwref());</span>
+<span class="fc" id="L131">        api.putParams(&quot;action&quot;, this.getAction());</span>
+<span class="fc" id="L132">        api.putParams(&quot;SECKEY&quot;, secret_key);</span>
+
+<span class="fc" id="L134">        return this.apiConnection.connectAndQuery(api);</span>
+
+        }
+
+    /**
+     * @return the flwref
+     */
+    public String getFlwref() {
+<span class="fc" id="L142">        return flwref;</span>
+    }
+
+    /**
+     * @param flwref the flwref to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setFlwref(String flwref) {
+<span class="fc" id="L150">        this.flwref = flwref;</span>
+<span class="fc" id="L151">        return this;</span>
+    }
+
+    /**
+     * @return the action
+     */
+    public String getAction() {
+<span class="fc" id="L158">        return action;</span>
+    }
+
+    /**
+     * @param action the action to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setAction(String action) {
+<span class="fc" id="L166">        this.action = action;</span>
+<span class="fc" id="L167">        return this;</span>
+    }
+
+    /**
+     * @return the cardno
+     */
+    public String getCardno() {
+<span class="fc" id="L174">        return cardno;</span>
+    }
+
+    /**
+     * @param cardno the cardno to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setCardno(String cardno) {
+<span class="fc" id="L182">        this.cardno = cardno;</span>
+<span class="fc" id="L183">        return this;</span>
+    }
+
+    /**
+     * @return the cvv
+     */
+    public String getCvv() {
+<span class="fc" id="L190">        return cvv;</span>
+    }
+
+    /**
+     * @param cvv the cvv to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setCvv(String cvv) {
+<span class="fc" id="L198">        this.cvv = cvv;</span>
+<span class="fc" id="L199">        return this;</span>
+    }
+
+    /**
+     * @return the expirymonth
+     */
+    public String getExpirymonth() {
+<span class="fc" id="L206">        return expirymonth;</span>
+    }
+
+    /**
+     * @param expirymonth the expirymonth to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setExpirymonth(String expirymonth) {
+<span class="fc" id="L214">        this.expirymonth = expirymonth;</span>
+<span class="fc" id="L215">        return this;</span>
+    }
+
+    /**
+     * @return the expiryyear
+     */
+    public String getExpiryyear() {
+<span class="fc" id="L222">        return expiryyear;</span>
+    }
+
+    /**
+     * @param expiryyear the expiryyear to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setExpiryyear(String expiryyear) {
+<span class="fc" id="L230">        this.expiryyear = expiryyear;</span>
+<span class="fc" id="L231">        return this;</span>
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+<span class="fc" id="L238">        return currency;</span>
+    }
+
+    /**
+     * @param currency the currency to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setCurrency(String currency) {
+<span class="fc" id="L246">        this.currency = currency;</span>
+<span class="fc" id="L247">        return this;</span>
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+<span class="fc" id="L254">        return country;</span>
+    }
+
+    /**
+     * @param country the country to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setCountry(String country) {
+<span class="fc" id="L262">        this.country = country;</span>
+<span class="fc" id="L263">        return this;</span>
+    }
+
+    /**
+     * @return the amount
+     */
+    public String getAmount() {
+<span class="fc" id="L270">        return amount;</span>
+    }
+
+    /**
+     * @param amount the amount to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setAmount(String amount) {
+<span class="fc" id="L278">        this.amount = amount;</span>
+<span class="fc" id="L279">        return this;</span>
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+<span class="fc" id="L286">        return email;</span>
+    }
+
+    /**
+     * @param email the email to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setEmail(String email) {
+<span class="fc" id="L294">        this.email = email;</span>
+<span class="fc" id="L295">        return this;</span>
+    }
+
+    /**
+     * @return the phonenumber
+     */
+    public String getPhonenumber() {
+<span class="fc" id="L302">        return phonenumber;</span>
+    }
+
+    /**
+     * @param phonenumber the phonenumber to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setPhonenumber(String phonenumber) {
+<span class="fc" id="L310">        this.phonenumber = phonenumber;</span>
+<span class="fc" id="L311">        return this;</span>
+    }
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+<span class="fc" id="L318">        return firstname;</span>
+    }
+
+    /**
+     * @param firstname the firstname to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setFirstname(String firstname) {
+<span class="fc" id="L326">        this.firstname = firstname;</span>
+<span class="fc" id="L327">        return this;</span>
+    }
+
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+<span class="fc" id="L334">        return lastname;</span>
+    }
+
+    /**
+     * @param lastname the lastname to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setLastname(String lastname) {
+<span class="fc" id="L342">        this.lastname = lastname;</span>
+<span class="fc" id="L343">        return this;</span>
+    }
+
+    /**
+     * @return the IP
+     */
+    public String getIP() {
+<span class="nc" id="L350">        return IP;</span>
+    }
+
+    /**
+     * @param IP the IP to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setIP(String IP) {
+<span class="fc" id="L358">        this.IP = IP;</span>
+<span class="fc" id="L359">        return this;</span>
+    }
+
+    /**
+     * @return the txRef
+     */
+    public String getTxRef() {
+<span class="fc" id="L366">        return txRef;</span>
+    }
+
+    /**
+     * @param txRef the txRef to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setTxRef(String txRef) {
+<span class="fc" id="L374">        this.txRef = txRef;</span>
+<span class="fc" id="L375">        return this;</span>
+    }
+
+    /**
+     * @return the redirect_url
+     */
+    public String getRedirect_url() {
+<span class="fc" id="L382">        return redirect_url;</span>
+    }
+
+    /**
+     * @param redirect_url the redirect_url to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setRedirect_url(String redirect_url) {
+<span class="fc" id="L390">        this.redirect_url = redirect_url;</span>
+<span class="fc" id="L391">        return this;</span>
+    }
+
+    /**
+     * @return the device_fingerprint
+     */
+    public String getDevice_fingerprint() {
+<span class="fc" id="L398">        return device_fingerprint;</span>
+    }
+
+    /**
+     * @param device_fingerprint the device_fingerprint to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setDevice_fingerprint(String device_fingerprint) {
+<span class="fc" id="L406">        this.device_fingerprint = device_fingerprint;</span>
+<span class="fc" id="L407">        return this;</span>
+    }
+
+    /**
+     * @return the charge_type
+     */
+    public String getCharge_type() {
+<span class="fc" id="L414">        return charge_type;</span>
+    }
+
+    /**
+     * @param charge_type the charge_type to set
+     * @return PreAuthorization
+     */
+    public PreAuthorization setCharge_type(String charge_type) {
+<span class="fc" id="L422">        this.charge_type = charge_type;</span>
+<span class="fc" id="L423">        return this;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

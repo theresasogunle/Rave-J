@@ -5,9 +5,6 @@
  */
 package com.github.theresasogunle;
 
-
-
-
 import static com.github.theresasogunle.Encryption.encryptData;
 import static com.github.theresasogunle.Encryption.getKey;
 import java.awt.Desktop;
@@ -23,138 +20,135 @@ import org.json.JSONObject;
  * @author Theresa
  */
 public class CardCharge {
-    JSONObject api=new JSONObject();
-    Endpoints ed=new Endpoints();
+
+    JSONObject api = new JSONObject();
+    Endpoints ed = new Endpoints();
     ApiConnection apiConnection;
-  
-    Encryption e=new Encryption();
-    private String cardno,cvv,expirymonth,expiryyear,currency,country,pin,suggested_auth,
-      amount,email,phonenumber,firstname,lastname,txRef,redirect_url,device_fingerprint,IP,
+
+    Encryption e = new Encryption();
+    private String cardno, cvv, expirymonth, expiryyear, currency, country, pin, billingzip, billingcity, billingaddress, billingstate, billingcountry,
+            amount, email, phonenumber, firstname, lastname, txRef, redirect_url, device_fingerprint, IP,
             charge_type;
- 
-   private String transactionreference,otp, authUrl;
+
+    private String transactionreference, otp, authUrl;
+
     /**
-    *
+     *
+     *
+     *
+     * @return JSONObject
+     */
+    public JSONObject setJSON() {
+        JSONObject json = new JSONObject();
+        try {
 
-    * 
-    * @return JSONObject
-    */
-    
-   public JSONObject setJSON() {
-        JSONObject json=new JSONObject();
-        try{
-            
-        json.put("cardno", this.getCardno());
-        json.put("cvv", this.getCvv());
-        json.put("currency", this.getCurrency());
-        json.put("country", this.getCountry());
-        json.put("amount", this.getAmount());
-        json.put("expiryyear", this.getExpiryyear());
-        json.put("expirymonth", this.getExpirymonth());
-        json.put("email", this.getEmail());
-        json.put("IP", this.getIP());
-        json.put("txRef", this.getTxRef());
-        json.put("device_fingerprint", this.getDevice_fingerprint());
-       // json.put("pin", this.getPin());
-        //json.put("suggested_auth", this.getSuggested_auth());
-        json.put("firstname", this.getFirstname());
-        json.put("lastname", this.getLastname());
-        json.put("redirect_url", this.getRedirect_url());
-        json.put("charge_type", this.getCharge_type());
-        }catch( JSONException ex){ex.getMessage();}
+            json.put("cardno", this.getCardno());
+            json.put("cvv", this.getCvv());
+            json.put("currency", this.getCurrency());
+            json.put("country", this.getCountry());
+            json.put("amount", this.getAmount());
+            json.put("expiryyear", this.getExpiryyear());
+            json.put("expirymonth", this.getExpirymonth());
+            json.put("email", this.getEmail());
+            json.put("IP", this.getIP());
+            json.put("txRef", this.getTxRef());
+            json.put("device_fingerprint", this.getDevice_fingerprint());
+            json.put("firstname", this.getFirstname());
+            json.put("lastname", this.getLastname());
+            json.put("redirect_url", this.getRedirect_url());
+            json.put("charge_type", this.getCharge_type());
+        } catch (JSONException ex) {
+            ex.getMessage();
+        }
         return json;
-   }
-     
-    
-    public JSONObject chargeMasterAndVerveCard() throws JSONException{
-        JSONObject json= setJSON();
-        
-        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
-        json.put("pin",this.getPin() );
-        json.put("suggested_auth",this.getSuggested_auth() );
-
-        
-       String message= json.toString();
-
-        String encrypt_secret_key=getKey(RaveConstant.SECRET_KEY);
-        String client= encryptData(message,encrypt_secret_key);
-
-        Charge ch=new Charge();
-
-        return ch.charge(client);  
-    
     }
-    public JSONObject chargeMasterAndVerveCard(boolean polling) {
-        JSONObject json= setJSON();
-        
-        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
-        json.put("pin",this.getPin() );
-        json.put("suggested_auth",this.getSuggested_auth() );
-        Polling p=new Polling();
 
+    public JSONObject chargeCard() throws JSONException {
+        JSONObject json = setJSON();
+
+        String message = json.toString();
+
+        String encrypt_secret_key = getKey(RaveConstant.SECRET_KEY);
+        String client = encryptData(message, encrypt_secret_key);
+
+        Charge ch = new Charge();
+
+        return ch.charge(client);
+
+    }
+
+    public JSONObject rechargeCard(String suggested_auth) throws JSONException {
+        JSONObject json = setJSON();
+        Charge ch = new Charge();
+
+        JSONObject charge = new JSONObject();
+        if (suggested_auth.equals("PIN")) {
+            json.put("suggested_auth", suggested_auth);
+            System.out.println(suggested_auth);
+            json.put("pin", this.getPin());
+
+            String message = json.toString();
+            String encrypt_secret_key = getKey(RaveConstant.SECRET_KEY);
+            String client = encryptData(message, encrypt_secret_key);
+            charge = ch.charge(client);
+
+        } else if (suggested_auth.equalsIgnoreCase("NOAUTH_INTERNATIONAL") || suggested_auth.equalsIgnoreCase("AVS_VBVSECURECODE")) {
+            json.put("suggested_auth", suggested_auth);
+            json.put("billingzip", this.getBillingzip());
+            json.put("billingcity", this.getBillingcity());
+            json.put("billingaddress", this.getBillingaddress());
+            json.put("billingstate", this.getBillingstate());
+            json.put("billingcountry", this.getBillingcountry());
+            String message = json.toString();
+            String encrypt_secret_key = getKey(RaveConstant.SECRET_KEY);
+            String client = encryptData(message, encrypt_secret_key);
+            charge = ch.charge(client);
+        }
+        return charge;
+    }
+
+    public JSONObject chargeCard(boolean polling) throws JSONException {
+        JSONObject json = setJSON();
+        json.put("PBFPubKey", RaveConstant.PUBLIC_KEY);
+        Polling p = new Polling();
         return p.handleTimeoutCharge(json);
-    
+
     }
-    public JSONObject chargeVisaAndIntl() throws JSONException{
-        JSONObject json= setJSON();
-        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
-        json.put("redirect_url", this.getRedirect_url() );
 
-        String message= json.toString();
-
-        String encrypt_secret_key=getKey(RaveConstant.SECRET_KEY);
-        String client= encryptData(message,encrypt_secret_key);
-
-        Charge ch=new Charge();
-
-        return ch.charge(client); 
-    
-    }
-    
-      public JSONObject chargeVisaAndIntl(boolean polling) throws JSONException{
-        JSONObject json= setJSON();
-        json.put("PBFPubKey",RaveConstant.PUBLIC_KEY);
-        json.put("redirect_url", this.getRedirect_url() );
-        Polling p=new Polling();
-
-        return p.handleTimeoutCharge(json);
-    
-    }
-    
 
     /*
-    if AuthMode::"PIN"
-    @params transaction reference(flwRef),OTP 
-      * @return JSONObject
-    */
-
-    public JSONObject validateCardCharge(){
-        Charge vch= new Charge();
+     if AuthMode::"PIN"
+     @params transaction reference(flwRef),OTP 
+     * @return JSONObject
+     */
+    public JSONObject validateCardCharge() {
+        Charge vch = new Charge();
 
         return vch.validateCardCharge(this.getTransactionreference(), this.getOtp());
     }
+
     //if timeout
-    public JSONObject validateCardCharge(boolean polling){
-       
-        Polling p=new Polling();
-        
+    public JSONObject validateCardCharge(boolean polling) {
+
+        Polling p = new Polling();
+
         return p.validateCardChargeTimeout(this.getTransactionreference(), this.getOtp());
     }
-    
+
     /*
-    if AuthMode::"VBSECURE"or "AVS_VBVSECURECODE"
-    @params authUrl This requires that you copy the authurl returned in the response
-    and paste it in the argument and it opens a small window for card validation
-    */
-    public void validateCardChargeVB(){
-     
-      if (Desktop.isDesktopSupported()) {
-          try{
-    Desktop.getDesktop().browse(new URI(this.getAuthUrl()));
-          }catch(URISyntaxException | IOException ex){}
+     if AuthMode::"VBSECURE"or "AVS_VBVSECURECODE"
+     @params authUrl This requires that you copy the authurl returned in the response
+     and paste it in the argument and it opens a small window for card validation
+     */
+    public void validateCardChargeVB() {
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI(this.getAuthUrl()));
+            } catch (URISyntaxException | IOException ex) {
             }
+        }
     }
-   
 
     /**
      * @return the cardno
@@ -165,11 +159,11 @@ public class CardCharge {
 
     /**
      * @param cardno the cardno to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setCardno(String cardno) {
         this.cardno = cardno;
-        
+
         return this;
     }
 
@@ -182,11 +176,11 @@ public class CardCharge {
 
     /**
      * @param cvv the cvv to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setCvv(String cvv) {
         this.cvv = cvv;
-        
+
         return this;
     }
 
@@ -199,11 +193,11 @@ public class CardCharge {
 
     /**
      * @param expirymonth the expirymonth to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setExpirymonth(String expirymonth) {
         this.expirymonth = expirymonth;
-        
+
         return this;
     }
 
@@ -216,11 +210,11 @@ public class CardCharge {
 
     /**
      * @param expiryyear the expiryyear to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setExpiryyear(String expiryyear) {
         this.expiryyear = expiryyear;
-        
+
         return this;
     }
 
@@ -233,11 +227,11 @@ public class CardCharge {
 
     /**
      * @param currency the currency to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setCurrency(String currency) {
         this.currency = currency;
-        
+
         return this;
     }
 
@@ -250,11 +244,11 @@ public class CardCharge {
 
     /**
      * @param country the country to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setCountry(String country) {
         this.country = country;
-        
+
         return this;
     }
 
@@ -267,28 +261,11 @@ public class CardCharge {
 
     /**
      * @param pin the pin to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setPin(String pin) {
         this.pin = pin;
-        
-        return this;
-    }
 
-    /**
-     * @return the suggested_auth
-     */
-    public String getSuggested_auth() {
-        return suggested_auth;
-    }
-
-    /**
-     * @param suggested_auth the suggested_auth to set
-     *  @return CardCharge
-     */
-    public CardCharge setSuggested_auth(String suggested_auth) {
-        this.suggested_auth = suggested_auth;
-        
         return this;
     }
 
@@ -301,11 +278,11 @@ public class CardCharge {
 
     /**
      * @param amount the amount to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setAmount(String amount) {
         this.amount = amount;
-        
+
         return this;
     }
 
@@ -318,11 +295,11 @@ public class CardCharge {
 
     /**
      * @param email the email to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setEmail(String email) {
         this.email = email;
-        
+
         return this;
     }
 
@@ -335,11 +312,11 @@ public class CardCharge {
 
     /**
      * @param phonenumber the phonenumber to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
-        
+
         return this;
     }
 
@@ -352,11 +329,11 @@ public class CardCharge {
 
     /**
      * @param firstname the firstname to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setFirstname(String firstname) {
         this.firstname = firstname;
-        
+
         return this;
     }
 
@@ -369,11 +346,11 @@ public class CardCharge {
 
     /**
      * @param lastname the lastname to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setLastname(String lastname) {
         this.lastname = lastname;
-        
+
         return this;
     }
 
@@ -386,11 +363,11 @@ public class CardCharge {
 
     /**
      * @param IP the IP to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setIP(String IP) {
         this.IP = IP;
-        
+
         return this;
     }
 
@@ -403,11 +380,11 @@ public class CardCharge {
 
     /**
      * @param txRef the txRef to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setTxRef(String txRef) {
         this.txRef = txRef;
-        
+
         return this;
     }
 
@@ -420,11 +397,11 @@ public class CardCharge {
 
     /**
      * @param redirect_url the redirect_url to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setRedirect_url(String redirect_url) {
         this.redirect_url = redirect_url;
-        
+
         return this;
     }
 
@@ -437,11 +414,11 @@ public class CardCharge {
 
     /**
      * @param device_fingerprint the device_fingerprint to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setDevice_fingerprint(String device_fingerprint) {
         this.device_fingerprint = device_fingerprint;
-        
+
         return this;
     }
 
@@ -454,11 +431,11 @@ public class CardCharge {
 
     /**
      * @param charge_type the charge_type to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setCharge_type(String charge_type) {
         this.charge_type = charge_type;
-        
+
         return this;
     }
 
@@ -471,11 +448,11 @@ public class CardCharge {
 
     /**
      * @param transaction_reference the transaction_reference to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setTransactionreference(String transaction_reference) {
-        this.transactionreference= transaction_reference;
-        
+        this.transactionreference = transaction_reference;
+
         return this;
     }
 
@@ -488,11 +465,11 @@ public class CardCharge {
 
     /**
      * @param otp the otp to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setOtp(String otp) {
         this.otp = otp;
-        
+
         return this;
     }
 
@@ -505,11 +482,82 @@ public class CardCharge {
 
     /**
      * @param authUrl the authUrl to set
-     *  @return CardCharge
+     * @return CardCharge
      */
     public CardCharge setAuthUrl(String authUrl) {
         this.authUrl = authUrl;
-        
+
         return this;
     }
+
+    /**
+     * @return the billingzip
+     */
+    public String getBillingzip() {
+        return billingzip;
+    }
+
+    /**
+     * @param billingzip the billingzip to set
+     */
+    public void setBillingzip(String billingzip) {
+        this.billingzip = billingzip;
+    }
+
+    /**
+     * @return the billingcity
+     */
+    public String getBillingcity() {
+        return billingcity;
+    }
+
+    /**
+     * @param billingcity the billingcity to set
+     */
+    public void setBillingcity(String billingcity) {
+        this.billingcity = billingcity;
+    }
+
+    /**
+     * @return the billingaddress
+     */
+    public String getBillingaddress() {
+        return billingaddress;
+    }
+
+    /**
+     * @param billingaddress the billingaddress to set
+     */
+    public void setBillingaddress(String billingaddress) {
+        this.billingaddress = billingaddress;
+    }
+
+    /**
+     * @return the billingstate
+     */
+    public String getBillingstate() {
+        return billingstate;
+    }
+
+    /**
+     * @param billingstate the billingstate to set
+     */
+    public void setBillingstate(String billingstate) {
+        this.billingstate = billingstate;
+    }
+
+    /**
+     * @return the billingcountry
+     */
+    public String getBillingcountry() {
+        return billingcountry;
+    }
+
+    /**
+     * @param billingcountry the billingcountry to set
+     */
+    public void setBillingcountry(String billingcountry) {
+        this.billingcountry = billingcountry;
+    }
+
 }

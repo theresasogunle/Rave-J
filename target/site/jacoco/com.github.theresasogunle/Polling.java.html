@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Polling.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Rave</a> &gt; <a href="index.source.html" class="el_package">com.github.theresasogunle</a> &gt; <span class="el_source">Polling.java</span></div><h1>Polling.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.theresasogunle;
+
+import static com.github.theresasogunle.Encryption.encryptData;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ *
+ * @author Theresa
+ */
+<span class="nc" id="L16">public class Polling {</span>
+          ApiConnection apiConnection;
+<span class="nc" id="L18">      final private Endpoints ed=new Endpoints();</span>
+<span class="nc" id="L19">          Encryption e=new Encryption();</span>
+<span class="nc" id="L20">          RaveConstant key=new RaveConstant();</span>
+  
+  
+    //if timeout, start polling
+     /**
+     * 
+     *@param json
+     * @throws JSONException
+     * @return JSONObject
+     */
+    public JSONObject handleTimeoutCharge(JSONObject json){
+<span class="nc" id="L31">      this.apiConnection = new ApiConnection(ed.getChargeTimeoutEndpoint());</span>
+<span class="nc" id="L32">        JSONObject tcharge= null;</span>
+ 
+<span class="nc" id="L34">        String message= json.toString();</span>
+        
+<span class="nc" id="L36">        String encrypt_secret_key=Encryption.getKey( RaveConstant.SECRET_KEY);</span>
+<span class="nc" id="L37">        String client= encryptData(message,encrypt_secret_key);</span>
+      
+<span class="nc" id="L39">        String alg=&quot;3DES-24&quot;;</span>
+     
+<span class="nc" id="L41">        ApiQuery api=new ApiQuery();</span>
+        
+<span class="nc" id="L43">        api.putParams(&quot;PBFPubKey&quot;, RaveConstant.PUBLIC_KEY);</span>
+
+<span class="nc" id="L45">        api.putParams(&quot;client&quot;, client);</span>
+
+<span class="nc" id="L47">        api.putParams(&quot;alg&quot;, alg);</span>
+      
+<span class="nc" id="L49">        tcharge=  this.apiConnection.connectAndQuery(api);</span>
+       
+<span class="nc" id="L51">        return tcharge;</span>
+
+    }
+     /**
+     * 
+     * @param transaction_reference
+     * @param otp 
+     * @return String
+     */
+    public JSONObject validateCardChargeTimeout(String transaction_reference,String otp){
+       
+<span class="nc" id="L62">        this.apiConnection = new ApiConnection(ed.getValidateCardChargeTimeoutEndpoint());</span>
+<span class="nc" id="L63">         ApiQuery api=new ApiQuery();</span>
+        
+<span class="nc" id="L65">        api.putParams(&quot;PBFPubKey&quot;,RaveConstant.PUBLIC_KEY);</span>
+<span class="nc" id="L66">        api.putParams(&quot;transaction_reference&quot;, transaction_reference);</span>
+    
+<span class="nc" id="L68">        api.putParams(&quot;otp&quot;, otp);</span>
+
+<span class="nc" id="L70">        return this.apiConnection.connectAndQuery(api);</span>
+    }
+    
+    
+      /**
+     * 
+     * @param transaction_reference
+     * @param otp 
+     * @return String
+     */
+    public JSONObject validateAccountChargeTimeout(String transaction_reference,String otp){
+       
+<span class="nc" id="L82">        this.apiConnection = new ApiConnection(ed.getValidateAccountChargeTimeoutEndpoint());</span>
+<span class="nc" id="L83">         ApiQuery api=new ApiQuery();</span>
+        
+<span class="nc" id="L85">        api.putParams(&quot;PBFPubKey&quot;,RaveConstant.PUBLIC_KEY);</span>
+<span class="nc" id="L86">        api.putParams(&quot;transaction_reference&quot;, transaction_reference);</span>
+    
+<span class="nc" id="L88">        api.putParams(&quot;otp&quot;, otp);</span>
+
+<span class="nc" id="L90">        return this.apiConnection.connectAndQuery(api);</span>
+    }
+    
+    
+
+  
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

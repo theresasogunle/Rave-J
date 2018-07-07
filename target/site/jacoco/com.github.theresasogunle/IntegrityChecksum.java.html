@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IntegrityChecksum.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Rave</a> &gt; <a href="index.source.html" class="el_package">com.github.theresasogunle</a> &gt; <span class="el_source">IntegrityChecksum.java</span></div><h1>IntegrityChecksum.java</h1><pre class="source lang-java linenums">
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.theresasogunle;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Base64;
+
+import java.util.HashMap;
+
+/**
+ *
+ * @author Theresa
+ */
+<span class="fc" id="L20">public class IntegrityChecksum {</span>
+      
+<span class="fc" id="L22">        RaveConstant key=new RaveConstant();</span>
+    private String amount, payment_method,custom_description;
+    private String custom_logo,country,currency,customer_email; 
+    private String customer_lastname,customer_firstname,customer_phone,txref;
+     /**
+    *
+    * 
+    * @return String
+    *
+    */
+    
+    
+    public String integrityChecksum(){
+<span class="fc" id="L35">         HashMap payload=new HashMap();</span>
+         
+<span class="fc" id="L37">        payload.put(&quot;PBFPubKey&quot; , RaveConstant.PUBLIC_KEY);</span>
+<span class="fc" id="L38">        payload.put(&quot;amount&quot; ,this.getAmount());</span>
+<span class="fc" id="L39">        payload.put(&quot;payment_method&quot;, this.getPayment_method());</span>
+<span class="fc" id="L40">        payload.put(&quot;custom_description&quot;,this.getCustom_description());</span>
+<span class="fc" id="L41">        payload.put(&quot;custom_logo&quot;,this.getCustom_logo());</span>
+<span class="fc" id="L42">        payload.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L43">        payload.put(&quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L44">        payload.put (&quot;customer_email&quot;, this.getCustomer_email());</span>
+<span class="fc" id="L45">        payload.put(  &quot;customer_firstname&quot;, this.getCustomer_firstname());</span>
+<span class="fc" id="L46">        payload.put(&quot;customer_lastname&quot;, this.getCustomer_lastname());</span>
+<span class="fc" id="L47">        payload.put(&quot;customer_phone&quot;, this.getCustomer_phone());</span>
+<span class="fc" id="L48">        payload.put( &quot;txref&quot;,this.getTxref());</span>
+
+     
+     
+<span class="fc" id="L52">       Object[] keys=payload.keySet().toArray();</span>
+<span class="fc" id="L53">       Arrays.sort(keys);</span>
+<span class="fc" id="L54">       String hashedPayload = &quot;&quot;;</span>
+
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (Object key : keys) {</span>
+<span class="fc" id="L58">                hashedPayload+=payload.get(key);</span>
+            }
+<span class="fc" id="L60">              String  hashString  = hashedPayload +  RaveConstant.SECRET_KEY;</span>
+<span class="fc" id="L61">                String hash_string=&quot;&quot;;</span>
+
+                try{
+<span class="fc" id="L64">                        MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="fc" id="L65">                        byte[]  hash = digest.digest(hashString.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L66">                        hash_string=Base64.getEncoder().encodeToString(hash);</span>
+                      //  System.out.println(hash_string);
+<span class="pc" id="L68">                    }catch(Exception ex){}</span>
+
+<span class="fc" id="L70">                return hash_string;</span>
+    }
+
+    /**
+     * @return the amount
+     */
+    public String getAmount() {
+<span class="fc" id="L77">        return amount;</span>
+    }
+
+    /**
+     * @param amount the amount to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setAmount(String amount) {
+<span class="fc" id="L85">        this.amount = amount;</span>
+<span class="fc" id="L86">        return this;</span>
+    }
+
+    /**
+     * @return the payment_method
+     */
+    public String getPayment_method() {
+<span class="fc" id="L93">        return payment_method;</span>
+    }
+
+    /**
+     * @param payment_method the payment_method to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setPayment_method(String payment_method) {
+<span class="fc" id="L101">        this.payment_method = payment_method;</span>
+<span class="fc" id="L102">        return this;</span>
+    }
+
+    /**
+     * @return the custom_description
+     */
+    public String getCustom_description() {
+<span class="fc" id="L109">        return custom_description;</span>
+    }
+
+    /**
+     * @param custom_description the custom_description to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustom_description(String custom_description) {
+<span class="fc" id="L117">        this.custom_description = custom_description;</span>
+<span class="fc" id="L118">        return this;</span>
+    }
+
+    /**
+     * @return the custom_logo
+     * 
+     */
+    public String getCustom_logo() {
+<span class="fc" id="L126">        return custom_logo;</span>
+    }
+
+    /**
+     * @param custom_logo the custom_logo to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustom_logo(String custom_logo) {
+<span class="fc" id="L134">        this.custom_logo = custom_logo;</span>
+<span class="fc" id="L135">        return this;</span>
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+<span class="fc" id="L142">        return country;</span>
+    }
+
+    /**
+     * @param country the country to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCountry(String country) {
+<span class="fc" id="L150">        this.country = country;</span>
+<span class="fc" id="L151">        return this;</span>
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+<span class="fc" id="L158">        return currency;</span>
+    }
+
+    /**
+     * @param currency the currency to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCurrency(String currency) {
+<span class="fc" id="L166">        this.currency = currency;</span>
+<span class="fc" id="L167">        return this;</span>
+    }
+
+    /**
+     * @return the customer_email
+     */
+    public String getCustomer_email() {
+<span class="fc" id="L174">        return customer_email;</span>
+    }
+
+    /**
+     * @param customer_email the customer_email to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustomer_email(String customer_email) {
+<span class="fc" id="L182">        this.customer_email = customer_email;</span>
+<span class="fc" id="L183">        return this;</span>
+    }
+
+    /**
+     * @return the customer_lastname
+     */
+    public String getCustomer_lastname() {
+<span class="fc" id="L190">        return customer_lastname;</span>
+    }
+
+    /**
+     * @param customer_lastname the customer_lastname to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustomer_lastname(String customer_lastname) {
+<span class="fc" id="L198">        this.customer_lastname = customer_lastname;</span>
+<span class="fc" id="L199">        return this;</span>
+    }
+
+    /**
+     * @return the customer_firstname
+     */
+    public String getCustomer_firstname() {
+<span class="fc" id="L206">        return customer_firstname;</span>
+    }
+
+    /**
+     * @param customer_firstname the customer_firstname to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustomer_firstname(String customer_firstname) {
+<span class="fc" id="L214">        this.customer_firstname = customer_firstname;</span>
+<span class="fc" id="L215">        return this;</span>
+    }
+
+    /**
+     * @return the customer_phone
+     */
+    public String getCustomer_phone() {
+<span class="fc" id="L222">        return customer_phone;</span>
+    }
+
+    /**
+     * @param customer_phone the customer_phone to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setCustomer_phone(String customer_phone) {
+<span class="fc" id="L230">        this.customer_phone = customer_phone;</span>
+<span class="fc" id="L231">        return this;</span>
+    }
+
+    /**
+     * @return the txref
+     */
+    public String getTxref() {
+<span class="fc" id="L238">        return txref;</span>
+    }
+
+    /**
+     * @param txref the txref to set
+     * @return IntegrityChecksum
+     */
+    public IntegrityChecksum setTxref(String txref) {
+<span class="fc" id="L246">        this.txref = txref;</span>
+<span class="fc" id="L247">        return this;</span>
+    }
+    
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

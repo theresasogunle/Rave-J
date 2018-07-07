@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AlternativePayment.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Rave</a> &gt; <a href="index.source.html" class="el_package">com.github.theresasogunle</a> &gt; <span class="el_source">AlternativePayment.java</span></div><h1>AlternativePayment.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.theresasogunle;
+
+
+
+import static com.github.theresasogunle.Encryption.encryptData;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+
+/**
+ *
+ * @author Theresa
+ */
+<span class="fc" id="L20">public class AlternativePayment {</span>
+    
+    ApiConnection apiConnection;
+
+<span class="fc" id="L24">   Encryption e=new Encryption();</span>
+ 
+   
+   private String accountnumber,accountbank,currency,country,
+           amount,firstname,lastname,
+           pin,email,IP,txRef,phonenumber,orderRef,network,
+           flwRef;
+
+
+    /**
+    *
+    * @throws JSONException it throws JSON exception
+    * @return JSONObject
+    */
+    
+    // charge customers using nigerian USSD for GTB and Zenith Bank,Ghana mobile money and Kenya Mpesa
+ 
+     public JSONObject chargeNigerianUssd () {
+        //getting charge endpoint
+<span class="fc" id="L43">         JSONObject json=new JSONObject();</span>
+         try{
+<span class="fc" id="L45">          json.put(&quot;accountnumber&quot;, this.getAccountnumber());</span>
+<span class="fc" id="L46">           json.put(&quot;accountbank&quot;, this.getAccountbank());</span>
+<span class="fc" id="L47">           json.put(&quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L48">           json.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L49">           json.put(&quot;amount&quot;, this.getAmount());</span>
+<span class="fc" id="L50">           json.put(&quot;firstname&quot;, this.getFirstname());</span>
+<span class="fc" id="L51">           json.put(&quot;lastname&quot;, this.getLastname());</span>
+<span class="fc" id="L52">           json.put(&quot;pin&quot;, this.getPin());</span>
+<span class="fc" id="L53">           json.put(&quot;email&quot;, this.getEmail());</span>
+<span class="fc" id="L54">           json.put(&quot;IP&quot;, this.getIP());</span>
+<span class="fc" id="L55">           json.put(&quot;txRef&quot;, this.getTxRef());</span>
+<span class="fc" id="L56">           json.put(&quot;payment_type&quot;, &quot;ussd&quot;);</span>
+           
+<span class="pc" id="L58">         }catch(JSONException ex){ex.getMessage();}</span>
+<span class="fc" id="L59">           String message= json.toString();</span>
+        
+<span class="fc" id="L61">        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);</span>
+<span class="fc" id="L62">        String client= encryptData(message,encrypt_secret_key);</span>
+
+<span class="fc" id="L64">        Charge ch=new Charge();</span>
+        
+<span class="fc" id="L66">        return ch.charge(client);</span>
+
+    }
+      /**
+    *
+    * @throws JSONException it throws JSON exception
+    * @return JSONObject
+    */
+    
+     
+     public JSONObject chargeGhanaMobileMoney () {
+        //getting charge endpoint
+<span class="fc" id="L78">         JSONObject json=new JSONObject();</span>
+         try{
+<span class="fc" id="L80">       json.put(&quot;orderRef&quot;,this.getOrderRef());</span>
+<span class="fc" id="L81">       json.put(&quot;network&quot;, this.getNetwork());</span>
+<span class="fc" id="L82">       json.put(&quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L83">       json.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L84">       json.put(&quot;amount&quot;, this.getAmount());</span>
+<span class="fc" id="L85">       json.put(&quot;firstname&quot;, this.getFirstname());</span>
+<span class="fc" id="L86">       json.put(&quot;lastname&quot;, this.getLastname());</span>
+<span class="fc" id="L87">       json.put(&quot;pin&quot;, this.getPin());</span>
+<span class="fc" id="L88">       json.put(&quot;email&quot;, this.getEmail());</span>
+<span class="fc" id="L89">       json.put(&quot;IP&quot;, this.getIP());</span>
+<span class="fc" id="L90">       json.put(&quot;txRef&quot;, this.getTxRef());</span>
+<span class="fc" id="L91">       json.put(&quot;payment_type&quot;, &quot;mobilemoneygh&quot;);</span>
+<span class="fc" id="L92">        json.put(&quot;is_mobile_money_gh&quot;, &quot;1&quot;);</span>
+<span class="fc" id="L93">        json.put(&quot;phonenumber&quot;,this.getPhonenumber());</span>
+<span class="pc" id="L94">         }catch(JSONException ex){ex.getMessage();}  </span>
+<span class="fc" id="L95">      String message= json.toString();</span>
+        
+<span class="fc" id="L97">        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);</span>
+<span class="fc" id="L98">        String client= encryptData(message,encrypt_secret_key);</span>
+
+<span class="fc" id="L100">        Charge ch=new Charge();</span>
+        
+<span class="fc" id="L102">        return ch.charge(client);</span>
+
+    }
+      /**
+    *
+    * @throws JSONException it throws JSON exception
+    * @return JSONObject
+    */
+    
+      public JSONObject chargeKenyaMpesa () {
+        //getting charge endpoint
+<span class="fc" id="L113">          JSONObject json=new JSONObject();</span>
+          try{
+<span class="fc" id="L115">       json.put(&quot;currency&quot;, this.getCurrency());</span>
+<span class="fc" id="L116">       json.put(&quot;country&quot;, this.getCountry());</span>
+<span class="fc" id="L117">       json.put(&quot;amount&quot;, this.getAmount());</span>
+<span class="fc" id="L118">       json.put(&quot;firstname&quot;, this.getFirstname());</span>
+<span class="fc" id="L119">       json.put(&quot;lastname&quot;, this.getLastname());</span>
+<span class="fc" id="L120">       json.put(&quot;pin&quot;, this.getPin());</span>
+<span class="fc" id="L121">       json.put(&quot;email&quot;, this.getEmail());</span>
+<span class="fc" id="L122">       json.put(&quot;IP&quot;, this.getIP());</span>
+<span class="fc" id="L123">       json.put(&quot;txRef&quot;, this.getTxRef());</span>
+<span class="fc" id="L124">       json.put(&quot;orderRef&quot;, this.getOrderRef());</span>
+<span class="fc" id="L125">       json.put(&quot;phonenumber&quot;, this.getPhonenumber());</span>
+<span class="fc" id="L126">       json.put(&quot;payment_type&quot;, &quot;mpesa&quot;);</span>
+<span class="fc" id="L127">       json.put(&quot;is_mpesa&quot;, &quot;1&quot;);</span>
+<span class="pc" id="L128">          }catch(JSONException ex){ex.getMessage();}</span>
+<span class="fc" id="L129">         String message= json.toString();</span>
+        
+<span class="fc" id="L131">        String encrypt_secret_key=Encryption.getKey(RaveConstant.SECRET_KEY);</span>
+<span class="fc" id="L132">        String client= encryptData(message,encrypt_secret_key);</span>
+
+<span class="fc" id="L134">        Charge ch=new Charge();</span>
+        
+<span class="fc" id="L136">        return ch.charge(client); </span>
+
+    }
+
+    /**
+    *
+    * @param txref
+    * @param flwref
+    * @return JSONObject
+    */ 
+    //to requery transaction for ghana mobile money,kenya mpesa and nigerian ussd using xquery
+
+    /**
+     * @return the accountnumber
+     */
+    public String getAccountnumber() {
+<span class="fc" id="L152">        return accountnumber;</span>
+    }
+
+    /**
+     * @param accountnumber the accountnumber to set
+     * @return AlternativePayment
+     */
+    public AlternativePayment setAccountnumber(String accountnumber) {
+<span class="fc" id="L160">        this.accountnumber = accountnumber;</span>
+<span class="fc" id="L161">        return this;</span>
+    }
+
+    /**
+     * @return the accountbank
+     */
+    public String getAccountbank() {
+<span class="fc" id="L168">        return accountbank;</span>
+    }
+
+    /**
+     * @param accountbank the accountbank to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setAccountbank(String accountbank) {
+<span class="fc" id="L176">        this.accountbank = accountbank;</span>
+<span class="fc" id="L177">         return this;</span>
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+<span class="fc" id="L184">        return currency;</span>
+    }
+
+    /**
+     * @param currency the currency to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setCurrency(String currency) {
+<span class="fc" id="L192">        this.currency = currency;</span>
+<span class="fc" id="L193">         return this;</span>
+    }
+
+    /**
+     * @return the country
+     */
+    public String getCountry() {
+<span class="fc" id="L200">        return country;</span>
+    }
+
+    /**
+     * @param country the country to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setCountry(String country) {
+<span class="fc" id="L208">        this.country = country;</span>
+<span class="fc" id="L209">         return this;</span>
+    }
+
+    /**
+     * @return the amount
+     */
+    public String getAmount() {
+<span class="fc" id="L216">        return amount;</span>
+    }
+
+    /**
+     * @param amount the amount to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setAmount(String amount) {
+<span class="fc" id="L224">        this.amount = amount;</span>
+<span class="fc" id="L225">         return this;</span>
+    }
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+<span class="fc" id="L232">        return firstname;</span>
+    }
+
+    /**
+     * @param firstname the firstname to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setFirstname(String firstname) {
+<span class="fc" id="L240">        this.firstname = firstname;</span>
+<span class="fc" id="L241">         return this;</span>
+    }
+
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+<span class="fc" id="L248">        return lastname;</span>
+    }
+
+    /**
+     * @param lastname the lastname to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setLastname(String lastname) {
+<span class="fc" id="L256">         this.lastname = lastname;</span>
+<span class="fc" id="L257">         return this;</span>
+    }
+
+    /**
+     * @return the pin
+     */
+    public String getPin() {
+<span class="fc" id="L264">        return pin;</span>
+    }
+
+    /**
+     * @param pin the pin to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setPin(String pin) {
+<span class="fc" id="L272">        this.pin = pin;</span>
+<span class="fc" id="L273">         return this;</span>
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+<span class="fc" id="L280">        return email;</span>
+    }
+
+    /**
+     * @param email the email to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setEmail(String email) {
+<span class="fc" id="L288">        this.email = email;</span>
+<span class="fc" id="L289">         return this;</span>
+    }
+
+    /**
+     * @return the IP
+     */
+    public String getIP() {
+<span class="fc" id="L296">        return IP;</span>
+    }
+
+    /**
+     * @param IP the IP to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setIP(String IP) {
+<span class="fc" id="L304">        this.IP = IP;</span>
+<span class="fc" id="L305">         return this;</span>
+    }
+
+    /**
+     * @return the txRef
+     */
+    public String getTxRef() {
+<span class="fc" id="L312">        return txRef;</span>
+    }
+
+    /**
+     * @param txRef the txRef to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setTxRef(String txRef) {
+<span class="fc" id="L320">        this.txRef = txRef;</span>
+<span class="fc" id="L321">         return this;</span>
+    }
+
+    /**
+     * @return the phonenumber
+     */
+    public String getPhonenumber() {
+<span class="fc" id="L328">        return phonenumber;</span>
+    }
+
+    /**
+     * @param phonenumber the phonenumber to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setPhonenumber(String phonenumber) {
+<span class="fc" id="L336">        this.phonenumber = phonenumber;</span>
+<span class="fc" id="L337">         return this;</span>
+    }
+
+    /**
+     * @return the orderRef
+     */
+    public String getOrderRef() {
+<span class="fc" id="L344">        return orderRef;</span>
+    }
+
+    /**
+     * @param orderRef the orderRef to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setOrderRef(String orderRef) {
+<span class="fc" id="L352">        this.orderRef = orderRef;</span>
+<span class="fc" id="L353">         return this;</span>
+    }
+
+    /**
+     * @return the network
+     */
+    public String getNetwork() {
+<span class="fc" id="L360">        return network;</span>
+    }
+
+    /**
+     * @param network the network to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setNetwork(String network) {
+<span class="fc" id="L368">        this.network = network;</span>
+<span class="fc" id="L369">         return this;</span>
+    }
+
+    /**
+     * @return the flwRef
+     */
+    public String getFlwRef() {
+<span class="nc" id="L376">        return flwRef;</span>
+    }
+
+    /**
+     * @param flwRef the flwRef to set
+     *  @return AlternativePayment
+     */
+    public AlternativePayment setFlwRef(String flwRef) {
+<span class="nc" id="L384">        this.flwRef = flwRef;</span>
+<span class="nc" id="L385">         return this;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>
